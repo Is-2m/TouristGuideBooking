@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TouristGuideBooking</string>
+    <!--    <string name="global_cache">app_state_cache</string>-->
 </resources>
