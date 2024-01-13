@@ -1,12 +1,12 @@
 package com.mbdio.touristguidebooking.models;
 
 public abstract class User {
-    private String userID;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-//    private String password;
+    private String userID = "";
+    private String firstName = "";
+    private String lastName = "";
+    private String email = "";
+    private String phone = "";
+    private String bio = "";
     private UserType userType;
 
     public User() {
@@ -19,6 +19,24 @@ public abstract class User {
         this.email = email;
         this.phone = phone;
         this.userType = userType;
+    }
+
+    public User(String userID, String firstName, String lastName, String email, String phone, String bio, UserType userType) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.bio = bio;
+        this.userType = userType;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public User(String userID, String firstName, String lastName, String email, UserType userType) {
@@ -65,23 +83,23 @@ public abstract class User {
 
     // Setter Methods
 
-    public void setUserID( String userID ) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
-    public void setFirstName( String firstName ) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public void setLastName( String lastName ) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public void setEmail( String email ) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setPhone( String phone ) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

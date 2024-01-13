@@ -1,23 +1,22 @@
 package com.mbdio.touristguidebooking.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.Gson;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mbdio.touristguidebooking.R;
-import com.mbdio.touristguidebooking.dao.AuthDAO;
-import com.mbdio.touristguidebooking.utils.AppStateManager;
+import com.mbdio.touristguidebooking.activities.fragments.DiscoverGuidesFragment;
+import com.mbdio.touristguidebooking.activities.fragments.HomeFragment;
+import com.mbdio.touristguidebooking.activities.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn_logout;
-    TextView txt_hello;
+    private Fragment homeFragment;
+    private Fragment discoverFragment;
+    private Fragment profileFragment;
+    private Fragment activeFragment;
 
 
     @Override
@@ -25,19 +24,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txt_hello = findViewById(R.id.hello_world);
-        String hello="Hello Mr, Ms " + AppStateManager.getCurrentUser().getUserType().name()
-                + " " + AppStateManager.getCurrentUser().getLastName().toUpperCase();
-        txt_hello.setText(hello);
+        // Initialize fragments
+        homeFragment = new HomeFragment();
+        discoverFragment = new DiscoverGuidesFragment();
+        profileFragment = new ProfileFragment();
+        // Set the initial active fragment
+        activeFragment = homeFragment;
 
-        btn_logout = findViewById(R.id.btn_logout);
+        // Load the initial fragment
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_fragment, homeFragment, "Home")
+                .commit();
 
-        btn_logout.setOnClickListener(view -> {
-            AuthDAO.logout();
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+
+        // Set up BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                switchFragment(homeFragment, "Home");
+                return true;
+            } else if (itemId == R.id.nav_discover) {
+                switchFragment(discoverFragment, "Discover");
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                switchFragment(profileFragment, "Profile");
+
+                return true;
+            } else {
+                return false;
+            }
         });
+    }
+
+    private void switchFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, fragment, tag)
+                .commit();
+        activeFragment = fragment;
     }
 
 }
