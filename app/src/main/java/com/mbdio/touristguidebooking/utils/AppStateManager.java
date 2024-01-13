@@ -39,7 +39,7 @@ public class AppStateManager {
             } else if ((gson.fromJson(jsonUser, JsonObject.class))
                     .get("userType").toString().contains("GUIDE")) {
                 // cast to GUIDE class. something like 👇👇
-                // currentUser = gson.fromJson(jsonUser, Guide.class);
+//                 currentUser = gson.fromJson(jsonUser, Guide.class);
             }
         }
 

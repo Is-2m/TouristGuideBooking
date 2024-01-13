@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <Preference
+        app:key="change_name"
+        app:title="Change Name" />
+    <Preference
+        app:enabled="false"
+        app:key="verify_email"
+        app:summary="Your Email is already verified"
+        app:title="Verify Your Email" />
+    <EditTextPreference
+        app:key="change_phone"
+        app:title="Change Phone Number"/>
+    <Preference
+        app:key="change_name"
+        app:summary="Report technical issues or suggest new features"
+        app:title="Change Name" />
+
+</PreferenceScreen>
