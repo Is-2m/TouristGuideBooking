@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "52246430875",
-    "project_id": "touristguidebooking",
-    "storage_bucket": "touristguidebooking.appspot.com"
+    "project_number": "936287403436",
+    "project_id": "touristguidebooking-c2cde",
+    "storage_bucket": "touristguidebooking-c2cde.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:52246430875:android:daf89f4f686db72b9ab23e",
+        "mobilesdk_app_id": "1:936287403436:android:858817d12d3233800a4e09",
         "android_client_info": {
           "package_name": "com.mbdio.touristguidebooking"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "52246430875-sak6ff2466e5vcncjk9ml5n0nfmu77ck.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mbdio.touristguidebooking",
-            "certificate_hash": "657a48e97e16033d067de440368f0e7b9492b6f3"
-          }
-        },
-        {
-          "client_id": "52246430875-2f04bnpd21tr7ajkt88lsi9f477scu1u.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAGSVlSps6dKL1xjeneDrr7B2ooaxTQByg"
+          "current_key": "AIzaSyBp4I5Is5AsjhwiZIpd2F4i7znWGlItkGE"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "52246430875-2f04bnpd21tr7ajkt88lsi9f477scu1u.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
