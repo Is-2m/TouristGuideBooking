@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical"
+    tools:context=".activities.RegisterTouristActivity"
+
+
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Register"
+        android:textAlignment="center"
+        android:textSize="45dp"
+        android:textAppearance="@array/com_google_android_gms_fonts_certs"
+        android:textColor="@color/black"
+        android:textFontWeight="@android:integer/config_longAnimTime"
+        android:layout_margin="15dp"
+        android:layout_marginBottom="67dp"
+            />
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_marginTop="100dp"
+       android:orientation="vertical"
+       android:layout_height="match_parent">
+
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           android:layout_marginTop="50dp"
+           android:layout_marginBottom="@dimen/cardview_compat_inset_shadow"
+           android:background="#50ffffff"
+           android:hint="First Name"
+           android:padding="10dp"
+           android:textColor="@color/black"
+           android:id="@+id/register_guide_fname"
+
+
+
+           />
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           android:layout_marginTop="70dp"
+           android:layout_marginBottom="@dimen/cardview_compat_inset_shadow"
+           android:background="#50ffffff"
+           android:hint="Last Name"
+           android:padding="10dp"
+           android:textColor="@color/black"
+           android:id="@+id/register_guide_lname"
+
+           />
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           android:layout_marginTop="70dp"
+           android:layout_marginBottom="@dimen/cardview_compat_inset_shadow"
+           android:background="#50ffffff"
+           android:hint="Email"
+           android:padding="10dp"
+           android:textColor="@color/black"
+           android:id="@+id/register_guide_email"
+
+           />
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_margin="10dp"
+           android:layout_marginTop="70dp"
+           android:layout_marginBottom="@dimen/cardview_compat_inset_shadow"
+           android:background="#50ffffff"
+           android:hint="Password"
+           android:padding="10dp"
+           android:textColor="@color/black"
+           android:id="@+id/register_guide_password"
+
+           />
+
+   </LinearLayout>
+
+</LinearLayout>
