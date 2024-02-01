@@ -13,6 +13,7 @@
         android:layout_marginVertical="5dp"
         android:clickable="true"
         android:focusable="true"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="50dp"
         app:cardElevation="8dp">
 
@@ -47,6 +48,7 @@
                         app:shapeAppearanceOverlay="@style/customRoundCorners10" />
 
                     <TextView
+                        android:id="@+id/item_rate_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="5dp"
@@ -135,7 +137,7 @@
                     android:textFontWeight="600" />
 
                 <Button
-                    android:id="@+id/item_contact_bt"
+                    android:id="@+id/item_contact_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -1,16 +1,116 @@
 package com.mbdio.touristguidebooking.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.mbdio.touristguidebooking.R;
+import com.mbdio.touristguidebooking.dao.AuthCallbacks;
+import com.mbdio.touristguidebooking.dao.AuthDAO;
+import com.mbdio.touristguidebooking.dao.TouristCallbacks;
+import com.mbdio.touristguidebooking.dao.TouristDAO;
+import com.mbdio.touristguidebooking.models.Tourist;
+import com.mbdio.touristguidebooking.models.User;
+import com.mbdio.touristguidebooking.utils.AppStateManager;
 
 public class EditProfileActivity extends AppCompatActivity {
+
+    TextInputEditText txt_Fname, txt_Lname, txt_phone, txt_bio, txt_country;
+    TextView btn_resetPass, btn_verifyEmail, lbl_phone, lbl_email, lbl_email1, lbl_country;
+    Button btn_save;
+
+    Tourist user = (Tourist) AppStateManager.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        txt_Fname = findViewById(R.id.edit_profile_fname_txt);
+        txt_Lname = findViewById(R.id.edit_profile_lname_txt);
+        txt_bio = findViewById(R.id.edit_profile_bio_txt);
+        txt_phone = findViewById(R.id.edit_profile_phone_txt);
+        txt_country = findViewById(R.id.edit_profile_country_txt);
+        lbl_country = findViewById(R.id.edit_profile_country_lbl);
+        lbl_email = findViewById(R.id.edit_profile_email_lbl);
+        lbl_phone = findViewById(R.id.edit_profile_phone);
+        lbl_email1 = findViewById(R.id.edit_profile_email2_lbl);
+        btn_resetPass = findViewById(R.id.edit_profile_rest_pass_lbl);
+        btn_verifyEmail = findViewById(R.id.edit_profile_verify_email_lbl);
+        btn_save = findViewById(R.id.edit_profile_save_button);
+
+        lbl_email.setText(user.getEmail());
+        lbl_email1.setText(user.getEmail());
+        lbl_phone.setText(user.getPhone());
+        lbl_country.setText(user.getNationality());
+
+        if (AppStateManager.getCurrentFireUser().isEmailVerified()) {
+            btn_verifyEmail.setFocusable(false);
+            btn_verifyEmail.setClickable(false);
+            btn_verifyEmail.setEnabled(false);
+            btn_verifyEmail.setText("Email Verified");
+            btn_verifyEmail.setFocusable(false);
+            int color = ContextCompat.getColor(getBaseContext(), R.color.grayed_out);
+            btn_verifyEmail.setTextColor(color);
+        } else {
+            btn_verifyEmail.setOnClickListener(v -> {
+                AuthDAO.confirmEmail(EditProfileActivity.this, new AuthCallbacks() {
+                    @Override
+                    public void onEmailVerificationComplete() {
+                        Toast.makeText(EditProfileActivity.this,
+                                "A verification email was sent to " + user.getEmail(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+        }
+        btn_resetPass.setOnClickListener(v -> {
+            AuthDAO.resetPassword(EditProfileActivity.this, new AuthCallbacks() {
+                @Override
+                public void onPasswordResetComplete() {
+                    Toast.makeText(EditProfileActivity.this,
+                            "An email containing your password reset link was sent to " + user.getEmail(),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        });
+        btn_save.setOnClickListener(v -> {
+
+            String country = txt_country.getEditableText().toString();
+            String phone = txt_phone.getEditableText().toString();
+            String fname = txt_Fname.getEditableText().toString();
+            String lname = txt_Lname.getEditableText().toString();
+            String bio = txt_bio.getEditableText().toString();
+
+            Tourist t = new Tourist(user);
+            t.setPhone(phone);
+            t.setBio(bio);
+            t.setFirstName(fname);
+            t.setLastName(lname);
+            t.setNationality(country);
+
+
+            TouristDAO.update(t, new TouristCallbacks() {
+                @Override
+                public void onTouristUpdated(boolean success, String message) {
+                    if (success) {
+                        AppStateManager.setCurrentUser(t);
+                        Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                    setResult(RESULT_OK);
+                    finish();
+
+                }
+            });
+        });
+
     }
 }
