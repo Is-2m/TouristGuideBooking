@@ -12,7 +12,16 @@ public interface AuthCallbacks {
     default void onRegisterComplete(FirebaseUser user) {
         throw new NotImplementedError();
     }
+
     default void onCheckLoggedComplete(FirebaseUser user) {
+        throw new NotImplementedError();
+    }
+
+    default void onEmailVerificationComplete() {
+        throw new NotImplementedError();
+    }
+
+    default void onPasswordResetComplete() {
         throw new NotImplementedError();
     }
 }

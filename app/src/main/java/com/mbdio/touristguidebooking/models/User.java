@@ -36,7 +36,12 @@ public abstract class User {
     }
 
     public void setBio(String bio) {
-        this.bio = bio;
+        String spaceless =           // Removes leading and trailing spaces EX:
+                bio.trim();  // '   Hello  World!  ' -> 'Hello  World!'
+
+        if (!bio.isEmpty() && !spaceless.isEmpty()) {
+            this.bio = bio;
+        }
     }
 
     public User(String userID, String firstName, String lastName, String email, UserType userType) {
@@ -77,10 +82,6 @@ public abstract class User {
         return phone;
     }
 
-//    public String getPassword() {
-//        return password;
-//    }
-
     // Setter Methods
 
     public void setUserID(String userID) {
@@ -88,19 +89,39 @@ public abstract class User {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        String spaceless =           // Removes leading and trailing spaces EX:
+                firstName.trim();  // '   Hello  World!  ' -> 'Hello  World!'
+
+        if (!firstName.isEmpty() && !spaceless.isEmpty()) {
+            this.firstName = firstName;
+        }
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        String spaceless =           // Removes leading and trailing spaces EX:
+                lastName.trim();  // '   Hello  World!  ' -> 'Hello  World!'
+
+        if (!lastName.isEmpty() && !spaceless.isEmpty()) {
+            this.lastName = lastName;
+        }
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        String spaceless =           // Removes leading and trailing spaces EX:
+                email.trim();  // '   Hello  World!  ' -> 'Hello  World!'
+
+        if (!email.isEmpty() && !spaceless.isEmpty()) {
+            this.email = email;
+        }
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        String spaceless =           // Removes leading and trailing spaces EX:
+                phone.trim();  // '   Hello  World!  ' -> 'Hello  World!'
+
+        if (!phone.isEmpty() && !spaceless.isEmpty()) {
+            this.phone = phone;
+        }
     }
 
 //    public void setPassword( String password ) {

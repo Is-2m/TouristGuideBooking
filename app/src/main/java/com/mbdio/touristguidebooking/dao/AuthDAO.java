@@ -31,7 +31,15 @@ public class AuthDAO {
         fAuth = FirebaseAuth.getInstance();
         FirebaseUser user = fAuth.getCurrentUser();
         user.sendEmailVerification().addOnCompleteListener(activity, task -> {
+            callback.onEmailVerificationComplete();
+        });
+    }
+    public static void resetPassword(Activity activity, AuthCallbacks callback) {
+        fAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = fAuth.getCurrentUser();
 
+        fAuth.sendPasswordResetEmail(user.getEmail()).addOnCompleteListener(activity,task -> {
+            callback.onPasswordResetComplete();
         });
     }
 

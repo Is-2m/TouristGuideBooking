@@ -34,6 +34,8 @@ public class AppStateManager {
         if (jsonUser != null) {
             if ((gson.fromJson(jsonUser, JsonObject.class))
                     .get("userType").toString().contains("TOURIST")) {
+                System.out.println("AppStateManager.initialize");
+                System.out.println(jsonUser);
                 currentUser = gson.fromJson(jsonUser, Tourist.class);
 
             } else if ((gson.fromJson(jsonUser, JsonObject.class))
@@ -69,7 +71,7 @@ public class AppStateManager {
         return currentUser;
     }
 
-    public static void setCurrentUser(User currentUser) {
+    public static void setCurrentUser(User currentUser) { //Update currentUSer and save it to cache
         AppStateManager.currentUser = currentUser;
 
         Gson gson = new Gson();
