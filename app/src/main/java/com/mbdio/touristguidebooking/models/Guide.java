@@ -8,15 +8,17 @@ public class Guide extends User {
    private  String Location ;
    private String description;
 
+   public Guide() {
+      super();
+   }
+
    public Guide(String location) {
      super();
    }
 
-   public Guide(String userID, String firstName, String lastName, String email, String phone, UserType userType, List<String> languages, String location, String description) {
-      super(userID, firstName, lastName, email, phone, userType);
-      Languages = languages;
-      Location = location;
-      this.description = description;
+   public Guide(String userID, String firstName, String lastName, String email ) {
+      super(userID, firstName, lastName, email, UserType.GUIDE);
+
    }
 
    public Guide(String userID, String firstName, String lastName, String email, UserType userType, List<String> languages, String location, String description) {

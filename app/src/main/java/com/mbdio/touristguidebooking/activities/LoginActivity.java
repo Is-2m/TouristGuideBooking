@@ -77,8 +77,13 @@ public class LoginActivity extends AppCompatActivity {
                         UserDAO.getUser(fireUser.getUid(), new UserCallbacks() {
                             @Override
                             public void onGetUser(User user) {
-                                AppStateManager.setCurrentUser(user);
-                                redirectToMainActivity(user);
+                                if (user != null )
+                                {
+                                    AppStateManager.setCurrentUser(user);
+                                    redirectToMainActivity(user);
+                                } else {
+                                    System.out.println("makiiinaaaaach ");
+                                }
                             }
                         });
                     }
@@ -97,10 +102,11 @@ public class LoginActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (user.getUserType() == UserType.GUIDE) {
+
             //Redirect to Guide's home page, something like 👇👇
-//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    startActivity(intent);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
         }
     }
 

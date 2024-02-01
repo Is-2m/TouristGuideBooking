@@ -35,7 +35,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_register_lname"
+                android:id="@+id/register_guide_lname"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
