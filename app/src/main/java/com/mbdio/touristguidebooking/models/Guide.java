@@ -7,7 +7,7 @@ public class Guide extends User {
    private List<String> Languages ;
    private  String Location ;
    private String description;
-
+   private String profilePicture = "";
    public Guide() {
       super();
    }
@@ -21,11 +21,23 @@ public class Guide extends User {
 
    }
 
-   public Guide(String userID, String firstName, String lastName, String email, UserType userType, List<String> languages, String location, String description) {
+   public Guide(String userID, String firstName, String lastName, String email, UserType userType, List<String> languages, String location, String description , String profilePicture) {
       super(userID, firstName, lastName, email, userType);
       Languages = languages;
       Location = location;
       this.description = description;
+      this.profilePicture = profilePicture ;
+   }
+   public Guide(Guide t) {
+      this.setUserID(t.getUserID());
+      this.setUserType(t.getUserType());
+      this.setPhone(t.getPhone());
+      this.setEmail(t.getEmail());
+      this.setFirstName(t.getFirstName());
+      this.setLastName(t.getLastName());
+      this.setBio(t.getBio());
+     // this.setNationality(t.getNationality());
+      this.setProfilePicture(t.getProfilePicture());
    }
 
    public List<String> getLanguages() {
@@ -52,4 +64,11 @@ public class Guide extends User {
       this.description = description;
    }
 
+   public String getProfilePicture() {
+      return profilePicture;
+   }
+
+   public void setProfilePicture(String profilePicture) {
+      this.profilePicture = profilePicture;
+   }
 }

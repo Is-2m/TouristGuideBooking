@@ -15,6 +15,7 @@ import com.mbdio.touristguidebooking.dao.AuthCallbacks;
 import com.mbdio.touristguidebooking.dao.AuthDAO;
 import com.mbdio.touristguidebooking.dao.TouristCallbacks;
 import com.mbdio.touristguidebooking.dao.TouristDAO;
+import com.mbdio.touristguidebooking.models.Guide;
 import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
 import com.mbdio.touristguidebooking.utils.AppStateManager;
@@ -24,7 +25,7 @@ public class EditProfileActivity extends AppCompatActivity {
     TextInputEditText txt_Fname, txt_Lname, txt_phone, txt_bio, txt_country;
     TextView btn_resetPass, btn_verifyEmail, lbl_phone, lbl_email, lbl_email1, lbl_country;
     Button btn_save;
-
+    
     Tourist user = (Tourist) AppStateManager.getCurrentUser();
 
     @Override
