@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Guide extends User {
-   private List<String> Languages ;
+   private String Languages ;
    private  String Location ;
    private String description;
    private String profilePicture = "";
@@ -21,7 +21,7 @@ public class Guide extends User {
 
    }
 
-   public Guide(String userID, String firstName, String lastName, String email, UserType userType, List<String> languages, String location, String description , String profilePicture) {
+   public Guide(String userID, String firstName, String lastName, String email, UserType userType, String languages, String location, String description , String profilePicture) {
       super(userID, firstName, lastName, email, userType);
       Languages = languages;
       Location = location;
@@ -40,7 +40,8 @@ public class Guide extends User {
       this.setProfilePicture(t.getProfilePicture());
    }
 
-   public List<String> getLanguages() {
+
+   public String getLanguages() {
       return Languages;
    }
 
@@ -52,7 +53,7 @@ public class Guide extends User {
       return description;
    }
 
-   public void setLanguages(List<String> languages) {
+   public void setLanguages(String languages) {
       Languages = languages;
    }
 

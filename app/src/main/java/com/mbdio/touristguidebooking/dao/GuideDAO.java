@@ -31,4 +31,18 @@ public class GuideDAO {
                     }
                 });
     }
+
+    public static void update(Guide guide, GuideCallbacks callback) {
+        DocumentReference touristRef = usersCollection.document(guide.getUserID());
+        touristRef.set(guide).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(TAG, "Tourist updated successfully");
+                callback.onGuideUpdated(true, "Profile inserted successfully");
+            } else {
+                Log.w(TAG, "Error updating tourist", task.getException());
+                callback.onGuideUpdated(false, "Error updating profile");
+            }
+        });
+    }
+
 }
