@@ -25,9 +25,6 @@
             android:name=".activities.RegisterTouristActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.RegisterGuideActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.AccountTypeActivity"
             android:exported="false" />
         <activity

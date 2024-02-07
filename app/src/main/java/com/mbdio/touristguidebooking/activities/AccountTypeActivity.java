@@ -27,9 +27,7 @@ public class AccountTypeActivity extends AppCompatActivity {
         });
 
         guide_card.setOnClickListener(view -> {
-
-            Intent intent = new Intent(AccountTypeActivity.this, RegisterGuideActivity.class);
-            startActivity(intent);
+            Toast.makeText(this, "Waiting for Hatim to do this \uD83D\uDE1B ", Toast.LENGTH_SHORT).show();
         });
     }
 }

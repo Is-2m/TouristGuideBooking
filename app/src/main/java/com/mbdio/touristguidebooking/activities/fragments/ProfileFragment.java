@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mbdio.touristguidebooking.R;
@@ -25,7 +26,6 @@ import com.mbdio.touristguidebooking.dao.ImageManagerCallbacks;
 import com.mbdio.touristguidebooking.dao.ImageManagerDAO;
 import com.mbdio.touristguidebooking.dao.TouristCallbacks;
 import com.mbdio.touristguidebooking.dao.TouristDAO;
-import com.mbdio.touristguidebooking.models.Guide;
 import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
 import com.mbdio.touristguidebooking.models.UserType;
@@ -108,18 +108,10 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onProfilePictureUpdated(boolean success) {
                                 if (success) {
-                                        if(AppStateManager.getCurrentUser().getUserType() == UserType.TOURIST ) {
-                                            Tourist t = (Tourist) AppStateManager.getCurrentUser();
-                                            t.setProfilePicture(url);
-                                            AppStateManager.setCurrentUser(new Tourist(t));
-                                            refreshProfile(getContext());
-                                        } else {
-                                            Guide t = (Guide) AppStateManager.getCurrentUser();
-                                            t.setProfilePicture(url);
-                                            AppStateManager.setCurrentUser(new Guide(t));
-                                            refreshProfile(getContext());
-                                        }
-
+                                    Tourist t = (Tourist) AppStateManager.getCurrentUser();
+                                    t.setProfilePicture(url);
+                                    AppStateManager.setCurrentUser(new Tourist(t));
+                                    refreshProfile(getContext());
                                 }
                             }
                         });
@@ -150,21 +142,6 @@ public class ProfileFragment extends Fragment {
             profile_bio_lbl.setText(tourist.getBio());
             profile_email_lbl.setText(tourist.getEmail());
             profile_country_lbl.setText(tourist.getNationality());
-        } else {
-            Guide guide = (Guide) user;
-            String name = guide.getFirstName() + " " + guide.getLastName().toUpperCase();
-            if (!guide.getProfilePicture().isEmpty()) {
-                System.out.println("ProfileFragment.refreshProfile");
-                System.out.println("URL : " + guide.getProfilePicture());
-                Glide.with(ctx) // Replace 'context' with your Context
-                        .load(guide.getProfilePicture())
-                        .into(profile_img);
-            }
-            profile_name_lbl.setText(name);
-            profile_phone_lbl.setText(guide.getPhone());
-            profile_bio_lbl.setText(guide.getBio());
-            profile_email_lbl.setText(guide.getEmail());
-         //   profile_country_lbl.setText(guide.getNationality());
         }
     }
 }

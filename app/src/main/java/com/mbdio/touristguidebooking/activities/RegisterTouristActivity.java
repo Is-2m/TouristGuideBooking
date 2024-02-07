@@ -32,11 +32,11 @@ public class RegisterTouristActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_tourist);
 
         mAuth = FirebaseAuth.getInstance();
-        btn_register = findViewById(R.id.btn_register_guide);
-        txt_fname = findViewById(R.id.register_guide_fname);
-        txt_lname = findViewById(R.id.register_guide_lname);
-        txt_password = findViewById(R.id.register_guide_password);
-        txt_email = findViewById(R.id.register_guide_email);
+        btn_register = findViewById(R.id.btn_register_tourist);
+        txt_fname = findViewById(R.id.txt_register_fname);
+        txt_lname = findViewById(R.id.txt_register_lname);
+        txt_password = findViewById(R.id.txt_register_password);
+        txt_email = findViewById(R.id.txt_register_email);
         login_txt = findViewById(R.id.login_txt);
         login_txt.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterTouristActivity.this, LoginActivity.class);
