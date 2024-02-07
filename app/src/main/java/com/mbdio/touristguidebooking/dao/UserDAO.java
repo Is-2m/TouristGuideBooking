@@ -22,13 +22,10 @@ public class  UserDAO {
 
     public static void getUser(String uid, UserCallbacks callback) {
         Gson gson = new Gson();
-        System.out.println(uid);
         DocumentReference userRef = usersCollection.document(uid);
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                System.out.println("UserDAO.getUser");
-                System.out.println(document == null ? "null" : document);
                 if (document.get("userType").toString().contentEquals(UserType.TOURIST.name())) {
                     User user = document.toObject(Tourist.class);
                     callback.onGetUser(user);

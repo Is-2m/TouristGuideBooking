@@ -31,6 +31,12 @@
             android:name=".activities.AccountTypeActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.EmergencyNumberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ItemActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
