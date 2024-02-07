@@ -1,66 +1,144 @@
 package com.mbdio.touristguidebooking.activities.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.SearchView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mbdio.touristguidebooking.R;
+import com.mbdio.touristguidebooking.activities.EmergencyNumberActivity;
+import com.mbdio.touristguidebooking.activities.MonumentsActivity;
+import com.mbdio.touristguidebooking.adapters.myadapter;
+import com.mbdio.touristguidebooking.models.Monument;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    ImageView sos;
+    RecyclerView rview;
+    myadapter adapter;
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+        rview = v.findViewById(R.id.rview);
+        rview.setLayoutManager(new LinearLayoutManager(getContext()));
+        sos= v.findViewById(R.id.imageSOS);
+        sos.setOnClickListener(v1 -> {
+            Intent intent = new Intent(getContext(), EmergencyNumberActivity.class);
+            startActivity(intent);
+        });
+
+        getAll();
+        SearchView searchView = v.findViewById(R.id.search);
+
+        assert searchView != null;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                processSearch(getContext(), s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                processSearch(getContext(), s);
+                return false;
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return v;
     }
+    void getAll() {
+
+        ArrayList<Monument> pojoList = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("monuments").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot querySnapshot = task.getResult();
+                if (querySnapshot != null) {
+                    for (QueryDocumentSnapshot document : querySnapshot) {
+                        // Convert each document to model
+                        Monument pojo = document.toObject(Monument.class);
+                        pojoList.add(pojo);
+                    }
+                    show(pojoList);
+                }
+            }
+        });
+
+    }
+    private void processSearch(Context ctx, String s) {
+        ArrayList<Monument> lst;
+        if (s.isEmpty()) {
+            getAll();
+
+        } else {
+            lst = new ArrayList<>();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("monuments").whereGreaterThanOrEqualTo("name", s)
+                    .whereLessThanOrEqualTo("name", s + '\uf8ff').get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot != null) {
+                                for (QueryDocumentSnapshot document : querySnapshot) {
+                                    // Convert each document to model
+                                    Monument pojo = document.toObject(Monument.class);
+                                    lst.add(pojo);
+                                }
+                                show(lst);
+                            }
+                        }
+                    });
+        }
+
+    }
+    void show(ArrayList<Monument> lst) {
+        adapter = new myadapter(lst);
+        rview.setAdapter(adapter);
+    }
+
+   /* public void openEmergencyNumbersActivity(View view) {
+        // Start the EmergencyNumbersActivity
+        Intent intent = new Intent(getContext(), EmergencyNumberActivity.class);
+        startActivity(intent);*/
+
 }
