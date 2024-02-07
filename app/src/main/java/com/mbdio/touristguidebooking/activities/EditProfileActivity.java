@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,19 +15,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mbdio.touristguidebooking.R;
 import com.mbdio.touristguidebooking.dao.AuthCallbacks;
 import com.mbdio.touristguidebooking.dao.AuthDAO;
+import com.mbdio.touristguidebooking.dao.GuideCallbacks;
+import com.mbdio.touristguidebooking.dao.GuideDAO;
 import com.mbdio.touristguidebooking.dao.TouristCallbacks;
 import com.mbdio.touristguidebooking.dao.TouristDAO;
+import com.mbdio.touristguidebooking.models.Guide;
 import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
+import com.mbdio.touristguidebooking.models.UserType;
 import com.mbdio.touristguidebooking.utils.AppStateManager;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    TextInputEditText txt_Fname, txt_Lname, txt_phone, txt_bio, txt_country;
+    TextInputEditText txt_Fname, txt_Lname, txt_phone, txt_bio, txt_country, txt_languages;
     TextView btn_resetPass, btn_verifyEmail, lbl_phone, lbl_email, lbl_email1, lbl_country;
+    LinearLayout language_container, nationality_container;
     Button btn_save;
+    User user = AppStateManager.getCurrentUser();
 
-    Tourist user = (Tourist) AppStateManager.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +51,25 @@ public class EditProfileActivity extends AppCompatActivity {
         btn_resetPass = findViewById(R.id.edit_profile_rest_pass_lbl);
         btn_verifyEmail = findViewById(R.id.edit_profile_verify_email_lbl);
         btn_save = findViewById(R.id.edit_profile_save_button);
+        txt_languages = findViewById(R.id.edit_profile_languages);
+        language_container = findViewById(R.id.language_container);
+        nationality_container = findViewById(R.id.nationality_container);
+
+        if (AppStateManager.getCurrentUser().getUserType() == UserType.TOURIST) {
+
+            lbl_country.setText(((Tourist) user).getNationality());
+            language_container.setVisibility(View.INVISIBLE);
+
+        } else {
+            nationality_container.setVisibility(View.INVISIBLE);
+            txt_languages.setHint(((Guide) user).getLanguages());
+        }
+
 
         lbl_email.setText(user.getEmail());
         lbl_email1.setText(user.getEmail());
         lbl_phone.setText(user.getPhone());
-        lbl_country.setText(user.getNationality());
+
 
         if (AppStateManager.getCurrentFireUser().isEmailVerified()) {
             btn_verifyEmail.setFocusable(false);
@@ -87,29 +108,52 @@ public class EditProfileActivity extends AppCompatActivity {
             String fname = txt_Fname.getEditableText().toString();
             String lname = txt_Lname.getEditableText().toString();
             String bio = txt_bio.getEditableText().toString();
+            String langs = txt_languages.getEditableText().toString();
+            if (user.getUserType() == UserType.TOURIST) {
+                Tourist t = new Tourist(((Tourist) user));
+                t.setPhone(phone);
+                t.setBio(bio);
+                t.setFirstName(fname);
+                t.setLastName(lname);
+                t.setNationality(country);
+                TouristDAO.update(t, new TouristCallbacks() {
+                    @Override
+                    public void onTouristUpdated(boolean success, String message) {
+                        if (success) {
+                            AppStateManager.setCurrentUser(t);
+                            Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RESULT_OK);
+                        finish();
 
-            Tourist t = new Tourist(user);
-            t.setPhone(phone);
-            t.setBio(bio);
-            t.setFirstName(fname);
-            t.setLastName(lname);
-            t.setNationality(country);
-
-
-            TouristDAO.update(t, new TouristCallbacks() {
-                @Override
-                public void onTouristUpdated(boolean success, String message) {
-                    if (success) {
-                        AppStateManager.setCurrentUser(t);
-                        Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
-                    setResult(RESULT_OK);
-                    finish();
+                });
+            } else {
+                Guide t = new Guide(((Guide) user));
+                t.setPhone(phone);
+                t.setBio(bio);
+                t.setFirstName(fname);
+                t.setLastName(lname);
+                t.setLanguages(langs);
+                GuideDAO.update(t, new GuideCallbacks() {
+                    @Override
+                    public void onGuideUpdated(boolean success, String message) {
+                        if (success) {
+                            AppStateManager.setCurrentUser(t);
+                            Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RESULT_OK);
+                        finish();
 
-                }
-            });
+                    }
+                });
+            }
+
+
         });
 
     }
