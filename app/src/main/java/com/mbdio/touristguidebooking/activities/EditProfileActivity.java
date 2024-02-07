@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,10 +60,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
             lbl_country.setText(((Tourist) user).getNationality());
             language_container.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams params = language_container.getLayoutParams();
+// Changes the height and width to the specified *pixels*
+            params.height = 100;
+            params.width = 100;
+            language_container.setLayoutParams(params);
 
         } else {
-            nationality_container.setVisibility(View.INVISIBLE);
             txt_languages.setHint(((Guide) user).getLanguages());
+            ViewGroup.LayoutParams params = nationality_container.getLayoutParams();
+// Changes the height and width to the specified *pixels*
+            params.height = 100;
+            params.width = 100;
+            nationality_container.setLayoutParams(params);
+            nationality_container.setVisibility(View.INVISIBLE);
+
         }
 
 

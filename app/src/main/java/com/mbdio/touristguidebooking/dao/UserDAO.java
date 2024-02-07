@@ -1,12 +1,10 @@
 package com.mbdio.touristguidebooking.dao;
 
-import android.util.Log;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
 import com.mbdio.touristguidebooking.models.Guide;
 import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
@@ -21,7 +19,6 @@ public class  UserDAO {
 
 
     public static void getUser(String uid, UserCallbacks callback) {
-        Gson gson = new Gson();
         DocumentReference userRef = usersCollection.document(uid);
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

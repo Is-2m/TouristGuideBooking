@@ -17,10 +17,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mbdio.touristguidebooking.R;
 import com.mbdio.touristguidebooking.activities.EditProfileActivity;
+import com.mbdio.touristguidebooking.activities.LoginActivity;
+import com.mbdio.touristguidebooking.dao.AuthDAO;
 import com.mbdio.touristguidebooking.dao.ImageManagerCallbacks;
 import com.mbdio.touristguidebooking.dao.ImageManagerDAO;
 import com.mbdio.touristguidebooking.dao.TouristCallbacks;
@@ -47,7 +50,7 @@ public class ProfileFragment extends Fragment {
     FloatingActionButton pdp_edit_img;
     TextView profile_name_lbl, profile_bio_lbl, profile_email_lbl,
             profile_phone_lbl, profile_country_lbl;
-    Button btn_edit;
+    Button btn_edit, btn_logout;
     final int PICK_IMAGE_REQUEST = 197; // just a random number, and random number can do trick
 
     @Override
@@ -70,13 +73,19 @@ public class ProfileFragment extends Fragment {
         profile_country_lbl = v.findViewById(R.id.profile_country_lbl);
         profile_phone_lbl = v.findViewById(R.id.profile_phone_lbl);
         btn_edit = v.findViewById(R.id.profile_edit_btn);
+        btn_logout = v.findViewById(R.id.logout_btn);
 
         refreshProfile(getContext());
         btn_edit.setOnClickListener(v1 -> {
             Intent intent = new Intent(getActivity().getBaseContext(), EditProfileActivity.class);
             startActivityForResult(intent, 1);
         });
-
+        btn_logout.setOnClickListener(view -> {
+            AuthDAO.logout();
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(intent);
+        });
         pdp_edit_img.setOnClickListener(v1 -> {
             openImageChooser();
         });
@@ -108,17 +117,17 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onProfilePictureUpdated(boolean success) {
                                 if (success) {
-                                        if(AppStateManager.getCurrentUser().getUserType() == UserType.TOURIST ) {
-                                            Tourist t = (Tourist) AppStateManager.getCurrentUser();
-                                            t.setProfilePicture(url);
-                                            AppStateManager.setCurrentUser(new Tourist(t));
-                                            refreshProfile(getContext());
-                                        } else {
-                                            Guide t = (Guide) AppStateManager.getCurrentUser();
-                                            t.setProfilePicture(url);
-                                            AppStateManager.setCurrentUser(new Guide(t));
-                                            refreshProfile(getContext());
-                                        }
+                                    if (AppStateManager.getCurrentUser().getUserType() == UserType.TOURIST) {
+                                        Tourist t = (Tourist) AppStateManager.getCurrentUser();
+                                        t.setProfilePicture(url);
+                                        AppStateManager.setCurrentUser(new Tourist(t));
+                                        refreshProfile(getContext());
+                                    } else {
+                                        Guide t = (Guide) AppStateManager.getCurrentUser();
+                                        t.setProfilePicture(url);
+                                        AppStateManager.setCurrentUser(new Guide(t));
+                                        refreshProfile(getContext());
+                                    }
 
                                 }
                             }
@@ -164,7 +173,7 @@ public class ProfileFragment extends Fragment {
             profile_phone_lbl.setText(guide.getPhone());
             profile_bio_lbl.setText(guide.getBio());
             profile_email_lbl.setText(guide.getEmail());
-         //   profile_country_lbl.setText(guide.getNationality());
+            //   profile_country_lbl.setText(guide.getNationality());
         }
     }
 }

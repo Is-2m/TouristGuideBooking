@@ -232,6 +232,21 @@ numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium fu
             android:backgroundTint="@color/light_blue_600"
             android:text="Edit"
             android:textFontWeight="500" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/logout_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:layout_marginHorizontal="20dp"
+            android:text="Logout"
+            android:textFontWeight="500"
+            android:textColor="#B23B3B"
+            />
     </LinearLayout>
 
 </FrameLayout>

@@ -69,6 +69,9 @@ public class myadapter extends RecyclerView.Adapter< myadapter.myviewholder> {
                 intent.putExtra("address", clickedModel.getAdresse());
                 intent.putExtra("image", clickedModel.getImage());
                 intent.putExtra("history", clickedModel.getHistory());
+                intent.putExtra("longitude", clickedModel.getLongitude());
+                intent.putExtra("latitude", clickedModel.getLatitude());
+
 
                 // Start the ItemActivity
                 holder.itemView.getContext().startActivity(intent);

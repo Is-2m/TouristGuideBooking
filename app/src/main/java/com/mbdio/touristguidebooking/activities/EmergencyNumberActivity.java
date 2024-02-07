@@ -17,9 +17,9 @@ public class EmergencyNumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_number);
 
-        Toolbar toolbar = findViewById(R.id.toolbar3);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = findViewById(R.id.toolbar3);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
     public void callEmergencyNumber(View view) {

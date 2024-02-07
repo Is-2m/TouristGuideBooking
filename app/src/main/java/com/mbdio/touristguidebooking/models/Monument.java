@@ -3,7 +3,34 @@ package com.mbdio.touristguidebooking.models;
 
 public class Monument {
 
-    String name, adresse, ville,image, history;
+    String name, adresse, ville,image, history,longitude,latitude;
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public Monument(String name, String adresse, String ville, String image, String history, String longitude, String latitude) {
+        this.name = name;
+        this.adresse = adresse;
+        this.ville = ville;
+        this.image = image;
+        this.history = history;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Monument(){
     }
 
