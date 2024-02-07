@@ -7,11 +7,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+import com.mbdio.touristguidebooking.models.Guide;
 import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
 import com.mbdio.touristguidebooking.models.UserType;
 
-public class UserDAO {
+public class  UserDAO {
     private static final String TAG = "UserDAO";
     private static final String USERS_COLLECTION = "users"; // Change this to your collection name
 
@@ -21,14 +22,21 @@ public class UserDAO {
 
     public static void getUser(String uid, UserCallbacks callback) {
         Gson gson = new Gson();
+        System.out.println(uid);
         DocumentReference userRef = usersCollection.document(uid);
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
+                System.out.println("UserDAO.getUser");
+                System.out.println(document == null ? "null" : document);
                 if (document.get("userType").toString().contentEquals(UserType.TOURIST.name())) {
                     User user = document.toObject(Tourist.class);
                     callback.onGetUser(user);
+                } else {
+                    User user = document.toObject(Guide.class);
+                    callback.onGetUser(user);
                 }
+
             } else {
                 callback.onGetUser(null);
             }
