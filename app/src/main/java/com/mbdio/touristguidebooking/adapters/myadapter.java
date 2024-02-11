@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,14 +18,14 @@ import com.mbdio.touristguidebooking.models.Monument;
 
 import java.util.ArrayList;
 
-public class myadapter extends RecyclerView.Adapter< myadapter.myviewholder> {
+public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
 
     ArrayList<Monument> lst;
+
     public myadapter(ArrayList<Monument> list) {
         super();
-        lst=list;
+        lst = list;
     }
-
 
     @NonNull
     @Override
@@ -72,7 +73,6 @@ public class myadapter extends RecyclerView.Adapter< myadapter.myviewholder> {
                 intent.putExtra("longitude", clickedModel.getLongitude());
                 intent.putExtra("latitude", clickedModel.getLatitude());
 
-
                 // Start the ItemActivity
                 holder.itemView.getContext().startActivity(intent);
             }
@@ -81,7 +81,7 @@ public class myadapter extends RecyclerView.Adapter< myadapter.myviewholder> {
 
     @Override
     public int getItemCount() {
-        return lst==null?0:lst.size();
+        return lst == null ? 0 : lst.size();
     }
 
     static class myviewholder extends RecyclerView.ViewHolder {
@@ -97,4 +97,54 @@ public class myadapter extends RecyclerView.Adapter< myadapter.myviewholder> {
             history = itemView.findViewById(R.id.history);
         }
     }
+
+
+    // private void getCurrentLocation(Context ctx) {
+    // if (ActivityCompat.checkSelfPermission(ctx,
+    // Manifest.permission.ACCESS_FINE_LOCATION) !=
+    // PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx,
+    // Manifest.permission.ACCESS_COARSE_LOCATION) !=
+    // PackageManager.PERMISSION_GRANTED) {
+    // // TODO: Consider calling
+    // // ActivityCompat#requestPermissions
+    // // here to request the missing permissions, and then overriding
+    // // public void onRequestPermissionsResult(int requestCode, String[]
+    // permissions,
+    // // int[] grantResults)
+    // // to handle the case where the user grants the permission. See the
+    // documentation
+    // // for ActivityCompat#requestPermissions for more details.
+    // return;
+    // }
+    // LocationManager locationManager = (LocationManager)
+    // ctx.getSystemService(Context.LOCATION_SERVICE);
+    // boolean isNetworkEnabled =
+    // locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    // if (isNetworkEnabled) {
+
+    // }
+
+    // Location location =
+    // locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+    // if (location != null) {
+    // double latitude = location.getLatitude();
+    // double longitude = location.getLongitude();
+
+    // // Assuming you have another set of coordinates to compare against
+    // double otherLatitude = 34.0522; // Example coordinates
+    // double otherLongitude = -118.2437;
+
+    // float[] results = new float[1];
+    // Location.distanceBetween(latitude, longitude, otherLatitude, otherLongitude,
+    // results);
+    // float distanceInMeters = results[0];
+
+    // // Do something with the distance
+    // System.out.println("Distance to other location: " + distanceInMeters + "
+    // meters.");
+    // } else {
+    // // Handle location not available
+    // System.out.println("Location not available.");
+    // }
+    // }
 }

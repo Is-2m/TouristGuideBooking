@@ -1,103 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.ItemActivity"
-    android:paddingTop="50dp"
-    android:background="@drawable/bg2">
+    android:background="@color/white"
+    tools:context=".activities.ItemActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="5dp"
         android:orientation="vertical">
 
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="#C3CDC7"-->
-<!--            android:minHeight="?android:attr/actionBarSize"-->
-<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-<!--            android:id="@+id/toolbar"-->
-<!--            app:title="  " />-->
         <LinearLayout
+            android:id="@+id/back_arrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:background="@drawable/round_all_but_up_rigth_100">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout"
-            android:orientation="horizontal"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/toolbar"
+            android:orientation="horizontal">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shapeAppearanceOverlay="@style/circular"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
                 android:layout_margin="8dp"
+                android:elevation="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/imjjj"
-                />
+                app:shapeAppearanceOverlay="@style/circular15" />
 
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/nameTextView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="Name"
-            android:textColor="#78866B"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/VilleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/nameTextView"
-            android:layout_alignParentStart="true"
-            android:textFontWeight="700"
-            android:layout_marginStart="260dp"
-            android:layout_marginTop="4dp"
-            android:text="ville"
-            android:textSize="15dp" />
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Monu Name"
+                android:textColor="#052937"
+                android:textFontWeight="600"
+                android:textSize="22sp" />
 
-        <TextView
-            android:id="@+id/textaddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/VilleTextView"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginStart="8dp"
-            android:drawableLeft="@drawable/baseline_location_on_24"
-            android:text="adresse"
-            android:textColor="#0000FF"
-            android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="right">
 
-        <TextView
-            android:id="@+id/history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textaddress"
-            android:layout_margin="10dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textSize="16dp"
-            android:text="history"
-            android:textStyle="italic"
-            android:fontFamily="sans-serif-light"
-            />
+                <TextView
+                    android:id="@+id/VilleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="ville"
+                    android:textColor="@color/black"
+                    android:textFontWeight="400"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textaddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:foregroundTint="@color/light_yellow"
+                    android:gravity="center"
+                    android:text="adresse"
+                    android:textFontWeight="500"
+                    android:textColor="@color/light_yellow"
+                    android:textSize="18sp"
+                    app:drawableLeftCompat="@drawable/location_pin_img_yellow" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Kuda Bandos is a beautiful island located in the Maldives.
+             It is known for its stunning sunsets, picturesque villages,
+              volcanic landscapes, and crystal-clear waters.
+              The island is famous for its unique architecture, with fs"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

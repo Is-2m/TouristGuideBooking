@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mbdio.touristguidebooking.R;
@@ -21,8 +22,7 @@ import com.mbdio.touristguidebooking.models.Guide;
 public class RegisterGuideActivity extends AppCompatActivity {
 
 
-    private FirebaseAuth mAuth;
-    private EditText txt_email, txt_fname, txt_lname, txt_password  ;
+    private TextInputEditText txt_email, txt_fname, txt_lname, txt_password;
     private TextView login_txt;
     private MaterialButton btn_register;
 
@@ -33,18 +33,17 @@ public class RegisterGuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_guide);
 
 
-        mAuth = FirebaseAuth.getInstance();
         btn_register = findViewById(R.id.btn_register);
-        txt_fname =  findViewById(R.id.register_fname);
+        txt_fname = findViewById(R.id.register_fname);
         txt_lname = findViewById(R.id.register_lname);
         txt_password = findViewById(R.id.register_password);
         txt_email = findViewById(R.id.register_email);
         login_txt = findViewById(R.id.login_txt);
 
         login_txt.setOnClickListener(view -> {
-            Intent intent = new Intent( RegisterGuideActivity.this, LoginActivity.class);
+            Intent intent = new Intent(RegisterGuideActivity.this, LoginActivity.class);
 
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
         btn_register.setOnClickListener(view -> {
@@ -52,7 +51,7 @@ public class RegisterGuideActivity extends AppCompatActivity {
             String password = txt_password.getText().toString();
             String fname = txt_fname.getText().toString();
             String lname = txt_lname.getText().toString();
-            System.out.println(email  +","+ password +","+ fname +','+ lname);
+
             AuthDAO.register(RegisterGuideActivity.this, email, password, new AuthCallbacks() {
                 @Override
                 public void onRegisterComplete(FirebaseUser user) {

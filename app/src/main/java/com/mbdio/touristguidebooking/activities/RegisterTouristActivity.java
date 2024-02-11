@@ -21,7 +21,6 @@ import com.mbdio.touristguidebooking.models.Tourist;
 public class RegisterTouristActivity extends AppCompatActivity {
 
 
-    private FirebaseAuth mAuth;
     private TextInputEditText txt_email, txt_fname, txt_lname, txt_password;
     private TextView login_txt;
     private MaterialButton btn_register;
@@ -31,7 +30,6 @@ public class RegisterTouristActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_tourist);
 
-        mAuth = FirebaseAuth.getInstance();
         btn_register = findViewById(R.id.btn_register_guide);
         txt_fname = findViewById(R.id.register_guide_fname);
         txt_lname = findViewById(R.id.register_guide_lname);
@@ -40,7 +38,7 @@ public class RegisterTouristActivity extends AppCompatActivity {
         login_txt = findViewById(R.id.login_txt);
         login_txt.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterTouristActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
         btn_register.setOnClickListener(view -> {
@@ -56,7 +54,7 @@ public class RegisterTouristActivity extends AppCompatActivity {
                         TouristDAO.insertTourist(tourist, new TouristCallbacks() {
                             @Override
                             public void onTouristInserted(boolean success, String message) {
-                                if(success){
+                                if (success) {
                                     Intent intent = new Intent(RegisterTouristActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }

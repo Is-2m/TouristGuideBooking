@@ -9,11 +9,17 @@ public class Tourist extends User {
     public Tourist() {
     }
 
-//    public Tourist(String userID, String firstName, String lastName, String email, String phone,
-//                   String nationality) {
-//        super(userID, firstName, lastName, email, phone, UserType.TOURIST);
-//        this.nationality = nationality;
-//    }
+    public Tourist(Tourist t) {
+        this.setUserID(t.getUserID());
+        this.setUserType(t.getUserType());
+        this.setPhone(t.getPhone());
+        this.setEmail(t.getEmail());
+        this.setFirstName(t.getFirstName());
+        this.setLastName(t.getLastName());
+        this.setBio(t.getBio());
+        this.setNationality(t.getNationality());
+        this.setProfilePicture(t.getProfilePicture());
+    }
 
     public Tourist(String userID, String firstName, String lastName, String email, String phone, String bio, String nationality) {
         super(userID, firstName, lastName, email, phone, bio, UserType.TOURIST);
@@ -55,18 +61,6 @@ public class Tourist extends User {
         if (!profile.isEmpty() && !spaceless.isEmpty()) {
             this.profilePicture = profile;
         }
-    }
-
-    public Tourist(Tourist t) {
-        this.setUserID(t.getUserID());
-        this.setUserType(t.getUserType());
-        this.setPhone(t.getPhone());
-        this.setEmail(t.getEmail());
-        this.setFirstName(t.getFirstName());
-        this.setLastName(t.getLastName());
-        this.setBio(t.getBio());
-        this.setNationality(t.getNationality());
-        this.setProfilePicture(t.getProfilePicture());
     }
 
 }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,6 +24,7 @@ import com.mbdio.touristguidebooking.activities.EmergencyNumberActivity;
 import com.mbdio.touristguidebooking.activities.MonumentsActivity;
 import com.mbdio.touristguidebooking.adapters.myadapter;
 import com.mbdio.touristguidebooking.models.Monument;
+import com.mbdio.touristguidebooking.utils.AppStateManager;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,8 @@ public class HomeFragment extends Fragment {
     ImageView sos;
     RecyclerView rview;
     myadapter adapter;
+    TextView user_name_lbl;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -57,7 +61,9 @@ public class HomeFragment extends Fragment {
 
         rview = v.findViewById(R.id.rview);
         rview.setLayoutManager(new LinearLayoutManager(getContext()));
-        sos= v.findViewById(R.id.imageSOS);
+        sos = v.findViewById(R.id.imageSOS);
+        user_name_lbl = v.findViewById(R.id.user_name_lbl);
+        user_name_lbl.setText(AppStateManager.getCurrentUser().getFirstName());
         sos.setOnClickListener(v1 -> {
             Intent intent = new Intent(getContext(), EmergencyNumberActivity.class);
             startActivity(intent);
@@ -84,6 +90,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         return v;
     }
+
     void getAll() {
 
         ArrayList<Monument> pojoList = new ArrayList<>();
@@ -105,6 +112,7 @@ public class HomeFragment extends Fragment {
         });
 
     }
+
     private void processSearch(Context ctx, String s) {
         ArrayList<Monument> lst;
         if (s.isEmpty()) {
@@ -131,6 +139,7 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
     void show(ArrayList<Monument> lst) {
         adapter = new myadapter(lst);
         rview.setAdapter(adapter);

@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.hbb20.CountryCodePicker;
 import com.mbdio.touristguidebooking.R;
 import com.mbdio.touristguidebooking.dao.AuthCallbacks;
 import com.mbdio.touristguidebooking.dao.AuthDAO;
@@ -28,10 +30,12 @@ import com.mbdio.touristguidebooking.utils.AppStateManager;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    TextInputEditText txt_Fname, txt_Lname, txt_phone, txt_bio, txt_country, txt_languages;
+    TextInputEditText txt_Fname, txt_Lname, txt_bio, txt_country, txt_languages;
     TextView btn_resetPass, btn_verifyEmail, lbl_phone, lbl_email, lbl_email1, lbl_country;
-    LinearLayout language_container, nationality_container;
+    LinearLayout guide_container, nationality_container;
     Button btn_save;
+    CountryCodePicker ccp;
+    EditText txt_phone;
     User user = AppStateManager.getCurrentUser();
 
 
@@ -53,27 +57,28 @@ public class EditProfileActivity extends AppCompatActivity {
         btn_verifyEmail = findViewById(R.id.edit_profile_verify_email_lbl);
         btn_save = findViewById(R.id.edit_profile_save_button);
         txt_languages = findViewById(R.id.edit_profile_languages);
-        language_container = findViewById(R.id.language_container);
+        guide_container = findViewById(R.id.guide_container);
         nationality_container = findViewById(R.id.nationality_container);
+        ccp = findViewById(R.id.ccp);
+        ccp.registerCarrierNumberEditText(txt_phone);
+
 
         if (AppStateManager.getCurrentUser().getUserType() == UserType.TOURIST) {
 
             lbl_country.setText(((Tourist) user).getNationality());
-            language_container.setVisibility(View.INVISIBLE);
-            ViewGroup.LayoutParams params = language_container.getLayoutParams();
-// Changes the height and width to the specified *pixels*
-            params.height = 100;
-            params.width = 100;
-            language_container.setLayoutParams(params);
+            guide_container.setVisibility(View.INVISIBLE);
+            guide_container.getLayoutParams().height = 0;
+
+            nationality_container.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            nationality_container.setVisibility(View.VISIBLE);
 
         } else {
             txt_languages.setHint(((Guide) user).getLanguages());
-            ViewGroup.LayoutParams params = nationality_container.getLayoutParams();
-// Changes the height and width to the specified *pixels*
-            params.height = 100;
-            params.width = 100;
-            nationality_container.setLayoutParams(params);
+            nationality_container.getLayoutParams().height = 0;
             nationality_container.setVisibility(View.INVISIBLE);
+
+            guide_container.setVisibility(View.VISIBLE);
+            guide_container.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
         }
 
@@ -115,12 +120,17 @@ public class EditProfileActivity extends AppCompatActivity {
         });
         btn_save.setOnClickListener(v -> {
 
+
+            String phone = "+" + ccp.getSelectedCountryCode() + txt_phone.getEditableText().toString();
+            phone = phone.replace(" ", "");
+            phone = phone.replace("-", "");
+
             String country = txt_country.getEditableText().toString();
-            String phone = txt_phone.getEditableText().toString();
             String fname = txt_Fname.getEditableText().toString();
             String lname = txt_Lname.getEditableText().toString();
             String bio = txt_bio.getEditableText().toString();
             String langs = txt_languages.getEditableText().toString();
+
             if (user.getUserType() == UserType.TOURIST) {
                 Tourist t = new Tourist(((Tourist) user));
                 t.setPhone(phone);

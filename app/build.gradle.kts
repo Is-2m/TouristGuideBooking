@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.mbdio.touristguidebooking"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -43,6 +43,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("com.hbb20:ccp:2.7.1")
 
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.cardview:cardview:1.0.0")

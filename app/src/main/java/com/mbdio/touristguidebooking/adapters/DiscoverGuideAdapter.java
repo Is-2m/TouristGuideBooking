@@ -14,8 +14,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mbdio.touristguidebooking.R;
+import com.mbdio.touristguidebooking.activities.ViewProfileActivity;
+import com.mbdio.touristguidebooking.activities.fragments.ProfileFragment;
 import com.mbdio.touristguidebooking.adapters.viewholders.GuideItemHolder;
+import com.mbdio.touristguidebooking.models.Guide;
+import com.mbdio.touristguidebooking.utils.AppStateManager;
 import com.mbdio.touristguidebooking.utils.DemoData;
 
 import java.util.ArrayList;
@@ -24,11 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 public class DiscoverGuideAdapter extends RecyclerView.Adapter<GuideItemHolder> {
-    private List<Map<String, Object>> lst = DemoData.getTouristGuidesData();
+    private List<Guide> lst = new ArrayList<>();
     private Context ctx;
 
-    public DiscoverGuideAdapter(Context ctx) {
+    public DiscoverGuideAdapter(Context ctx, ArrayList<Guide> guides) {
         this.ctx = ctx;
+        lst = guides;
     }
 
     @NonNull
@@ -40,21 +46,30 @@ public class DiscoverGuideAdapter extends RecyclerView.Adapter<GuideItemHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull GuideItemHolder holder, int position) {
-        Map<String, Object> currentItem = lst.get(position);
-        holder.bio_lbl.setText(currentItem.get("bio").toString());
-        holder.name_lbl.setText(currentItem.get("name").toString());
-        holder.langs_lbl.setText(String.join(", ", (String[]) currentItem.get("languages")));
-        holder.rate_item.setText(currentItem.get("rating").toString());
-        holder.city_lbl.setText(currentItem.get("city").toString());
+        Guide curntGuide = lst.get(position);
+        String name = curntGuide.getFirstName() + " " + curntGuide.getLastName();
+        holder.bio_lbl.setText(curntGuide.getBio());
+        holder.name_lbl.setText(name);
+        holder.langs_lbl.setText(curntGuide.getLanguages());
+        holder.city_lbl.setText(curntGuide.getLocation());
 
-        String url = "https://api.whatsapp.com/send?phone=" + currentItem.get("phone");
+        Glide.with(ctx).load(curntGuide.getProfilePicture()).error(R.drawable.guide).into(holder.pdp_img);
+
+        holder.guide_item.setOnClickListener(v -> {
+            AppStateManager.setClickedGuide(curntGuide);
+            Intent intent = new Intent(ctx, ViewProfileActivity.class);
+            ctx.startActivity(intent);
+        });
+
+        String phone = curntGuide.getPhone().replace(" ", "");
+        String url = "https://api.whatsapp.com/send?phone=" + phone;
 
         holder.contact_btn.setOnClickListener(v -> {
-            Toast.makeText(ctx, currentItem.get("phone").toString(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ctx.startActivity(intent);
         });
+
 
     }
 

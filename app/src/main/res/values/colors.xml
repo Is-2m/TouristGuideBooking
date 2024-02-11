@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
@@ -10,4 +11,8 @@
     <color name="whatsapp_green">#FF25D366</color>
     <color name="amber">#FFFFBF00</color>
     <color name="grayed_out">#FF808080</color>
+    <color name="light_grey">#FF999EA1</color>
+    <color name="light_yellow">#FFF5BD33</color>
+    <color name="red_salmon">#FFE85F4C</color>
+    <color name="accept_green">#FF60AC25</color>
 </resources>

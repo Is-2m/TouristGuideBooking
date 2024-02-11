@@ -2,8 +2,19 @@ package com.mbdio.touristguidebooking.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        AppStateManager.initialize(this);
 
         btn_login = findViewById(R.id.btn_login);
         txt_password = findViewById(R.id.txt_login_password);
@@ -77,12 +87,9 @@ public class LoginActivity extends AppCompatActivity {
                         UserDAO.getUser(fireUser.getUid(), new UserCallbacks() {
                             @Override
                             public void onGetUser(User user) {
-                                if (user != null )
-                                {
+                                if (user != null) {
                                     AppStateManager.setCurrentUser(user);
                                     redirectToMainActivity(user);
-                                } else {
-                                    System.out.println("makiiinaaaaach ");
                                 }
                             }
                         });
@@ -99,15 +106,17 @@ public class LoginActivity extends AppCompatActivity {
         if (user.getUserType() == UserType.TOURIST) {
             //Redirect to Tourist's home page
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (user.getUserType() == UserType.GUIDE) {
 
             //Redirect to Guide's home page, something like 👇👇
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     }
+
+
 
 }

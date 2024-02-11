@@ -42,4 +42,7 @@
     <style name="circular">
         <item name="cornerSize">10%</item>
     </style>
+    <style name="circular15">
+        <item name="cornerSize">15%</item>
+    </style>
 </resources>

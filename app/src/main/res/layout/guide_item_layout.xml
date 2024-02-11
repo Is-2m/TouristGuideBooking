@@ -2,153 +2,156 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/item_card"
+
+    <LinearLayout
+        android:id="@+id/guide_item"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="10dp"
+        android:layout_height="match_parent"
         android:layout_marginVertical="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="50dp"
-        app:cardElevation="8dp">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/item_pdp_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/guide"
+                    app:shapeAppearanceOverlay="@style/customRoundCorners10" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/item_pdp_img"
-                        android:layout_width="match_parent"
-                        android:layout_height="90dp"
-                        android:background="#f1f1f1"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/guide"
-                        app:shapeAppearanceOverlay="@style/customRoundCorners10" />
 
-                    <TextView
-                        android:id="@+id/item_rate_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="5dp"
-                        android:text="4.3/5 (230)"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="4"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/item_name_lbl"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Complete name"
-                        android:textFontWeight="700"
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Languages: "
-                            android:textFontWeight="500" />
-
-                        <TextView
-                            android:id="@+id/item_langs_lbl"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Arabic, French, English..."
-                            android:textFontWeight="500" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="City: "
-                            android:textFontWeight="500" />
-
-                        <TextView
-                            android:id="@+id/item_city_lbl"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="A City"
-                            android:textFontWeight="500" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/item_bio_lbl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="3"
-                        android:ellipsize="end"
-                        android:text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur"
-                        android:textFontWeight="400" />
-
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="3"
+                android:orientation="vertical">
 
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/item_book_btn"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/item_name_lbl"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:text="Book"
-                    android:textFontWeight="600" />
+                    android:textColor="@color/black"
+                    android:text="Complete name"
+                    android:textFontWeight="700"
+                    android:textSize="12sp" />
 
-                <Button
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Languages: "
+                        android:textColor="#242424"
+                        android:textSize="12sp"
+                        android:textFontWeight="500" />
+
+                    <TextView
+                        android:id="@+id/item_langs_lbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="Arabic, French, English..."
+                        android:textFontWeight="500" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="#242424"
+                        android:text="City: "
+                        android:textFontWeight="500" />
+
+                    <TextView
+                        android:id="@+id/item_city_lbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="A City"
+                        android:textFontWeight="500" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/item_bio_lbl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <LinearLayout
                     android:id="@+id/item_contact_btn"
-                    android:layout_width="0dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/whatsapp_green"
-                    android:text="Contact"
-                    android:textFontWeight="600"
-                    android:textSize="15sp" />
+                    android:paddingVertical="5dp"
+                    android:gravity="center"
+                    android:background="@drawable/wtsp_green_outlined">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact"
+                        android:textFontWeight="500"
+                        android:textColor="@color/whatsapp_green"/>
+                </LinearLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+                <LinearLayout
+                    android:id="@+id/item_book_btn"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:gravity="center"
+                    android:background="@drawable/dark_blue_outlined">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Book"
+                        android:textFontWeight="500"
+                        android:textColor="#192F5D"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
 </LinearLayout>

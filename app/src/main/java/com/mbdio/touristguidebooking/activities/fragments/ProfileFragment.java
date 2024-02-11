@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,22 +42,19 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        return fragment;
-    }
 
     ImageView profile_img;
     FloatingActionButton pdp_edit_img;
+    LinearLayout guide_thingies;
     TextView profile_name_lbl, profile_bio_lbl, profile_email_lbl,
-            profile_phone_lbl, profile_country_lbl;
-    Button btn_edit, btn_logout;
+            profile_phone_lbl, profile_country_lbl, btn_logout,
+            profile_languages_lbl, profile_city_lbl;
+    Button btn_edit;
     final int PICK_IMAGE_REQUEST = 197; // just a random number, and random number can do trick
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 
@@ -74,21 +72,29 @@ public class ProfileFragment extends Fragment {
         profile_phone_lbl = v.findViewById(R.id.profile_phone_lbl);
         btn_edit = v.findViewById(R.id.profile_edit_btn);
         btn_logout = v.findViewById(R.id.logout_btn);
+        guide_thingies = v.findViewById(R.id.guides_thingies);
+        profile_languages_lbl = v.findViewById(R.id.profile_languages_lbl);
+        profile_city_lbl = v.findViewById(R.id.profile_city_lbl);
+
 
         refreshProfile(getContext());
         btn_edit.setOnClickListener(v1 -> {
-            Intent intent = new Intent(getActivity().getBaseContext(), EditProfileActivity.class);
+            Intent intent = new Intent(getContext(), EditProfileActivity.class);
             startActivityForResult(intent, 1);
         });
+
         btn_logout.setOnClickListener(view -> {
             AuthDAO.logout();
             Intent intent = new Intent(getContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             getContext().startActivity(intent);
         });
+
         pdp_edit_img.setOnClickListener(v1 -> {
             openImageChooser();
         });
+
+
         return v;
     }
 
@@ -144,36 +150,49 @@ public class ProfileFragment extends Fragment {
 
     private void refreshProfile(Context ctx) {
         User user = AppStateManager.getCurrentUser();
+
         if (user.getUserType() == UserType.TOURIST) {
             Tourist tourist = (Tourist) user;
             String name = tourist.getFirstName() + " " + tourist.getLastName().toUpperCase();
-            if (!tourist.getProfilePicture().isEmpty()) {
-                System.out.println("ProfileFragment.refreshProfile");
-                System.out.println("URL : " + tourist.getProfilePicture());
-                Glide.with(ctx) // Replace 'context' with your Context
-                        .load(tourist.getProfilePicture())
-                        .into(profile_img);
-            }
             profile_name_lbl.setText(name);
             profile_phone_lbl.setText(tourist.getPhone());
             profile_bio_lbl.setText(tourist.getBio());
             profile_email_lbl.setText(tourist.getEmail());
             profile_country_lbl.setText(tourist.getNationality());
+
+            guide_thingies.setVisibility(View.INVISIBLE);
+            guide_thingies.getLayoutParams().height = 0;
+
+            if (!tourist.getProfilePicture().isEmpty()) {
+                Glide.with(ctx) // Replace 'context' with your Context
+                        .load(tourist.getProfilePicture())
+                        .into(profile_img);
+            }
         } else {
             Guide guide = (Guide) user;
             String name = guide.getFirstName() + " " + guide.getLastName().toUpperCase();
-            if (!guide.getProfilePicture().isEmpty()) {
-                System.out.println("ProfileFragment.refreshProfile");
-                System.out.println("URL : " + guide.getProfilePicture());
-                Glide.with(ctx) // Replace 'context' with your Context
-                        .load(guide.getProfilePicture())
-                        .into(profile_img);
-            }
+            String langs = String.join(", ", guide.getLanguages().split(";"));
+
+
+            profile_country_lbl.setText("Morocco");
+
+            guide_thingies.setVisibility(View.VISIBLE);
+            guide_thingies.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
             profile_name_lbl.setText(name);
             profile_phone_lbl.setText(guide.getPhone());
             profile_bio_lbl.setText(guide.getBio());
             profile_email_lbl.setText(guide.getEmail());
+            profile_languages_lbl.setText(langs);
+            profile_city_lbl.setText(guide.getLocation());
+
+            if (!guide.getProfilePicture().isEmpty()) {
+                Glide.with(ctx) // Replace 'context' with your Context
+                        .load(guide.getProfilePicture())
+                        .into(profile_img);
+            }
             //   profile_country_lbl.setText(guide.getNationality());
         }
+
     }
 }

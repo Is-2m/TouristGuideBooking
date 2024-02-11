@@ -12,6 +12,11 @@ import android.view.ViewGroup;
 
 import com.mbdio.touristguidebooking.R;
 import com.mbdio.touristguidebooking.adapters.DiscoverGuideAdapter;
+import com.mbdio.touristguidebooking.dao.GuideCallbacks;
+import com.mbdio.touristguidebooking.dao.GuideDAO;
+import com.mbdio.touristguidebooking.models.Guide;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +24,7 @@ import com.mbdio.touristguidebooking.adapters.DiscoverGuideAdapter;
  * create an instance of this fragment.
  */
 public class DiscoverGuidesFragment extends Fragment {
-
+    RecyclerView recyclerView;
 
 
     public DiscoverGuidesFragment() {
@@ -33,7 +38,7 @@ public class DiscoverGuidesFragment extends Fragment {
         return fragment;
     }
 
-    RecyclerView recyclerView;
+    ArrayList<Guide> guideList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,14 +51,22 @@ public class DiscoverGuidesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_discover_guides, container, false);
         recyclerView = v.findViewById(R.id.recycle_guide);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        GuideDAO.getAllGuides(new GuideCallbacks() {
+            @Override
+            public void onGetAllGuides(ArrayList<Guide> lst) {
+                showData(lst);
+            }
+        });
 
 //        List<Map<String, Object>> guidesData = getTouristGuidesData();  // Use your data source method here
-        DiscoverGuideAdapter adapter = new DiscoverGuideAdapter(getActivity().getBaseContext());
-        recyclerView.setAdapter(adapter);
+
 
         return v;
     }
-
+    void showData(ArrayList<Guide> lst ){
+        DiscoverGuideAdapter adapter = new DiscoverGuideAdapter(getContext(), lst);
+        recyclerView.setAdapter(adapter);
+    }
 }

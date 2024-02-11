@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
@@ -12,7 +13,7 @@ import com.mbdio.touristguidebooking.R;
 
 public class AccountTypeActivity extends AppCompatActivity {
 
-    ImageButton tourist_card, guide_card;
+    LinearLayout tourist_card, guide_card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
