@@ -9,7 +9,7 @@ import kotlin.NotImplementedError;
 
 public interface BookingCallbacks {
 
-    default void onBookingInserted(boolean success,  String message) {
+    default void onBookingInserted(boolean success,String path, String message) {
         throw new NotImplementedError();
     }
 

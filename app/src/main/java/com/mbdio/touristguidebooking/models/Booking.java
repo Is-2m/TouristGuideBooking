@@ -1,6 +1,8 @@
 package com.mbdio.touristguidebooking.models;
 
 
+import com.google.firebase.firestore.Exclude;
+
 import java.util.Date;
 import java.util.IdentityHashMap;
 
@@ -9,6 +11,7 @@ public class Booking {
     private String date;
     private BookingStatus status;
     private String touristId;
+    @Exclude
     private Tourist tourist;
 
     public Booking() {
@@ -19,7 +22,7 @@ public class Booking {
         this.date = date;
         this.status = status;
         this.touristId = touristId;
-        this.tourist = tourist;
+        this.setTourist( tourist);
     }
 
     public Booking(String date, BookingStatus status, String touristId) {

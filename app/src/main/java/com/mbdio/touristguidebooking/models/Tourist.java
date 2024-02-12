@@ -1,10 +1,13 @@
 package com.mbdio.touristguidebooking.models;
 
 
+import java.util.ArrayList;
+
 public class Tourist extends User {
 
     private String nationality = "";
     private String profilePicture = "";
+    private ArrayList<String> listBookings;
 
     public Tourist() {
     }
@@ -19,6 +22,16 @@ public class Tourist extends User {
         this.setBio(t.getBio());
         this.setNationality(t.getNationality());
         this.setProfilePicture(t.getProfilePicture());
+        this.setListBookings(t.listBookings);
+
+    }
+
+    public ArrayList<String> getListBookings() {
+        return listBookings;
+    }
+
+    public void setListBookings(ArrayList<String> listBookings) {
+        this.listBookings = listBookings == null ? this.listBookings : listBookings;
     }
 
     public Tourist(String userID, String firstName, String lastName, String email, String phone, String bio, String nationality) {

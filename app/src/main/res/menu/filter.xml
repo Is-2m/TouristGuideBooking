@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Filter Menu Item -->
+    <item
+        android:id="@+id/opt_all"
+        android:title="All"/>
+
+    <item
+        android:id="@+id/opt_approve"
+        android:title="Approved"/>
+    <item
+        android:id="@+id/opt_deny"
+        android:title="Denied" />
+    <item
+        android:id="@+id/opt_pending"
+        android:title="Pending" />
+</menu>

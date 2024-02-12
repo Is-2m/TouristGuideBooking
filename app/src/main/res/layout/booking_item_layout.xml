@@ -104,43 +104,66 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone : "
                         android:paddingTop="2dp"
+                        android:text="Phone : "
                         android:textColor="#242424"
                         android:textFontWeight="500"
                         android:textSize="12sp" />
 
-                 <LinearLayout
-                     android:id="@+id/item_book_phone"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent">
-                     <TextView
-                         android:id="@+id/item_book_phone_lbl"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:clickable="true"
-                         android:focusable="true"
-                         android:paddingTop="2dp"
-                         android:text="+2126 12345678"
-                         android:textColor="@color/light_yellow"
-                         android:textFontWeight="600"
-                         android:textSize="12sp" />
+                    <LinearLayout
+                        android:id="@+id/item_book_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                     <ImageView
-                         android:layout_width="wrap_content"
-                         android:layout_height="match_parent"
-                         android:src="@drawable/baseline_call_16"
-                         android:foregroundTint="@color/light_yellow"
-                         android:layout_marginHorizontal="4dp"/>
-                 </LinearLayout>
+                        <TextView
+                            android:id="@+id/item_book_phone_lbl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingTop="2dp"
+                            android:text="+2126 12345678"
+                            android:textColor="@color/light_yellow"
+                            android:textFontWeight="600"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="4dp"
+                            android:foregroundTint="@color/light_yellow"
+                            android:src="@drawable/baseline_call_16" />
+                    </LinearLayout>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Booking Status: "
+                        android:textColor="#242424"
+                        android:textFontWeight="500"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item_book_state_lbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pending"
+                        android:textFontWeight="600"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/options_container"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -154,35 +177,13 @@
                     android:gravity="center"
                     android:paddingVertical="5dp">
 
-                    <TextView
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Accept"
-                        android:textColor="@color/accept_green"
-                        android:textFontWeight="500" />
+                        android:src="@drawable/baseline_check_24"/>
                 </LinearLayout>
 
-                <!--                <androidx.legacy.widget.Space-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="10dp" />-->
 
-                <!--                <LinearLayout-->
-                <!--                    android:id="@+id/item_book_contact_btn"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:background="@drawable/wtsp_green_outlined"-->
-                <!--                    android:clickable="true"-->
-                <!--                    android:focusable="true"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:paddingVertical="5dp">-->
-
-                <!--                    <TextView-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:text="Contact"-->
-                <!--                        android:textColor="@color/whatsapp_green"-->
-                <!--                        android:textFontWeight="500" />-->
-                <!--                </LinearLayout>-->
 
                 <androidx.legacy.widget.Space
                     android:layout_width="match_parent"
@@ -198,11 +199,67 @@
                     android:gravity="center"
                     android:paddingVertical="5dp">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_close_24"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/approved_container"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/light_grey_outlined"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingVertical="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Accepted"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/light_grey"
+                        android:textFontWeight="500" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/denied_container"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:background="@drawable/light_grey_outlined"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingVertical="5dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Deny"
-                        android:textColor="@color/red_salmon"
+                        android:text="Denied"
+                        android:textColor="@color/light_grey"
                         android:textFontWeight="500" />
                 </LinearLayout>
             </LinearLayout>

@@ -6,13 +6,18 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.mbdio.touristguidebooking.models.Booking;
 import com.mbdio.touristguidebooking.models.Guide;
 import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
 import com.mbdio.touristguidebooking.utils.AppStateManager;
+import com.mbdio.touristguidebooking.utils.TouristExclusionStrategy;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class BookingDAO {
     private static final String TAG = "BookingDAO";
@@ -22,24 +27,44 @@ public class BookingDAO {
     private static CollectionReference usersCollection = db.collection(USERS_COLLECTION);
 
     public static void insertBooking(Booking booking, String guideID, BookingCallbacks callback) {
-        db.collection("user/" + guideID + "/bookings")
-                .add(booking)
+        String collectionPath = "users/" + guideID + "/bookings";
+
+        TouristExclusionStrategy strategy = new TouristExclusionStrategy();
+        Gson gson = new GsonBuilder().setExclusionStrategies(strategy).create();
+        String bookingJson = gson.toJson(booking);
+        Map<String, Object> bookingMap = gson.fromJson(bookingJson, new TypeToken<Map<String, Object>>() {
+        }.getType());
+
+
+        db.collection(collectionPath)
+                .add(bookingMap)
                 .addOnSuccessListener(documentReference -> {
-                    callback.onBookingInserted(true, "Success");
+                    callback.onBookingInserted(true, "users/" +
+                                    guideID + "/bookings/" + documentReference.getId(),
+                            "success");
                 }).addOnFailureListener(e -> {
-                    callback.onBookingInserted(false, e.getMessage());
+                    callback.onBookingInserted(false, null, e.getMessage());
                 });
     }
 
     public static void updateBooking(String guideID, Booking booking, BookingCallbacks callback) {
-        db.collection("user/" + guideID + "/bookings")
+        String collectionPath = "users/" + guideID + "/bookings";
+
+        TouristExclusionStrategy strategy = new TouristExclusionStrategy();
+        Gson gson = new GsonBuilder().setExclusionStrategies(strategy).create();
+        String bookingJson = gson.toJson(booking);
+        Map<String, Object> bookingMap = gson.fromJson(bookingJson, new TypeToken<Map<String, Object>>() {
+        }.getType());
+
+        db.collection(collectionPath)
                 .document(booking.getId())
-                .set(booking)
+                .set(bookingMap)
                 .addOnSuccessListener(aVoid -> {
                     callback.onBookingUpdated(true, "Booking updated successfully");
                 })
                 .addOnFailureListener(e -> {
-                    callback.onBookingUpdated(false, e.getMessage());
+                    callback.onBookingUpdated(false, "Error updating booking: " + e.getMessage());
+
                 });
     }
 
