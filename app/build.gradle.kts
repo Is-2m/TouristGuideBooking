@@ -16,7 +16,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    packaging {
+        resources {
+            excludes += listOf("META-INF/NOTICE.md", "META-INF/LICENSE.md")
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -44,6 +48,8 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.hbb20:ccp:2.7.1")
+    implementation ("com.sun.mail:android-mail:1.6.6")
+    implementation ("com.sun.mail:android-activation:1.6.6")
 
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -60,4 +66,5 @@ dependencies {
     implementation ("com.orhanobut:dialogplus:1.11@aar")
     implementation ("androidx.appcompat:appcompat:1.4.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+
 }

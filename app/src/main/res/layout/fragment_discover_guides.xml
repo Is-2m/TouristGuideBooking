@@ -49,13 +49,13 @@
                     android:queryBackground="@color/transparent"
                     android:queryHint="Search Monument" />
 
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
                 <ImageView
-                    android:id="@+id/filter_btn"
+                    android:id="@+id/guide_filter_btn"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"

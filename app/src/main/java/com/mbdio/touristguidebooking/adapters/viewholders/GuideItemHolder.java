@@ -2,6 +2,7 @@ package com.mbdio.touristguidebooking.adapters.viewholders;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,8 +14,8 @@ import com.mbdio.touristguidebooking.R;
 
 public class GuideItemHolder extends RecyclerView.ViewHolder {
     public ShapeableImageView pdp_img;
-    public TextView  name_lbl, langs_lbl, city_lbl, bio_lbl;
-    public LinearLayout book_btn, contact_btn,guide_item;
+    public TextView name_lbl, langs_lbl, city_lbl, bio_lbl;
+    public LinearLayout book_btn, contact_btn, guide_item;
 
     public GuideItemHolder(@NonNull View itemView) {
         super(itemView);

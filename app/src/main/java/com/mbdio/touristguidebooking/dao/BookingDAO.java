@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ import com.mbdio.touristguidebooking.utils.AppStateManager;
 import com.mbdio.touristguidebooking.utils.TouristExclusionStrategy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class BookingDAO {
@@ -91,6 +93,20 @@ public class BookingDAO {
                 .addOnFailureListener(e -> {
                     callback.onGetAllBookings(new ArrayList<>());
                 });
+    }
+
+    public static void getBooking(String path, BookingCallbacks callbacks) {
+        String[] parts = path.split("/");
+        String docId = parts[3];
+        String collection = String.join("/", Arrays.copyOf(parts, 3));
+        db.collection(collection).document(docId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Booking book = task.getResult().toObject(Booking.class);
+                callbacks.onGetBooking(book);
+            } else {
+                callbacks.onGetBooking(null);
+            }
+        });
     }
 
 

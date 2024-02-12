@@ -26,6 +26,7 @@ import com.mbdio.touristguidebooking.models.Guide;
 import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.utils.AppStateManager;
 import com.mbdio.touristguidebooking.utils.DemoData;
+import com.mbdio.touristguidebooking.utils.MailSender;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,9 +53,9 @@ public class DiscoverGuideAdapter extends RecyclerView.Adapter<GuideItemHolder> 
     @Override
     public void onBindViewHolder(@NonNull GuideItemHolder holder, int position) {
         Guide curntGuide = lst.get(position);
-        String name = curntGuide.getFirstName() + " " + curntGuide.getLastName();
+        String guideName = curntGuide.getFirstName() + " " + curntGuide.getLastName();
         holder.bio_lbl.setText(curntGuide.getBio());
-        holder.name_lbl.setText(name);
+        holder.name_lbl.setText(guideName);
         holder.langs_lbl.setText(curntGuide.getLanguages());
         holder.city_lbl.setText(curntGuide.getLocation());
 
@@ -108,6 +109,22 @@ public class DiscoverGuideAdapter extends RecyclerView.Adapter<GuideItemHolder> 
                                             AppStateManager.setCurrentUser(t);
                                         }
                                     });
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+
+                                                String touristName = t.getFirstName() + " " + t.getLastName();
+                                                MailSender.sendEmail(curntGuide.getEmail(),
+                                                        "Booking Request",
+                                                        MailSender.bookRequestTemplate(guideName, touristName,
+                                                                date, t.getEmail(), t.getPhone()));
+                                            } catch (final Exception e) {
+                                                // Handle failures, such as updating the UI to show an error message
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }).start();
                                 }
                             });
 

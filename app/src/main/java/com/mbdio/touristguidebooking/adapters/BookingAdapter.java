@@ -21,6 +21,7 @@ import com.mbdio.touristguidebooking.dao.BookingDAO;
 import com.mbdio.touristguidebooking.models.Booking;
 import com.mbdio.touristguidebooking.models.BookingStatus;
 import com.mbdio.touristguidebooking.utils.AppStateManager;
+import com.mbdio.touristguidebooking.utils.MailSender;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,27 @@ public class BookingAdapter extends RecyclerView.Adapter<BookItemHolder> {
                     if (success) {
                         curntBooking.setStatus(BookingStatus.APPROVED);
                         refreshState(holder, curntBooking.getStatus());
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+
+                                    String guideName = AppStateManager.getCurrentUser().getFirstName()
+                                            + " " + AppStateManager.getCurrentUser().getLastName();
+                                    String touristName = curntBooking.getTourist().getFirstName()
+                                            + " " + curntBooking.getTourist().getLastName();
+
+                                    MailSender.sendEmail(curntBooking.getTourist().getEmail(), "Booking Request Accepted",
+                                            MailSender.bookingApprovedTemplate(guideName, touristName, booking.getDate(),
+                                                    curntBooking.getId(), AppStateManager.getCurrentUser().getEmail()
+                                                    , AppStateManager.getCurrentUser().getPhone()));
+                                } catch (final Exception e) {
+                                    // Handle failures, such as updating the UI to show an error message
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                     }
                 }
             });
@@ -85,6 +107,26 @@ public class BookingAdapter extends RecyclerView.Adapter<BookItemHolder> {
                     if (success) {
                         curntBooking.setStatus(BookingStatus.DENIED);
                         refreshState(holder, curntBooking.getStatus());
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+
+                                    String guideName = AppStateManager.getCurrentUser().getFirstName()
+                                            + " " + AppStateManager.getCurrentUser().getLastName();
+                                    String touristName = curntBooking.getTourist().getFirstName()
+                                            + " " + curntBooking.getTourist().getLastName();
+
+                                    MailSender.sendEmail(curntBooking.getTourist().getEmail(), "Booking Request Accepted",
+                                            MailSender.bookingDeniedTemplate(guideName, touristName, booking.getDate(),
+                                                    curntBooking.getId(), AppStateManager.getCurrentUser().getEmail()
+                                                    , AppStateManager.getCurrentUser().getPhone()));
+                                } catch (final Exception e) {
+                                    // Handle failures, such as updating the UI to show an error message
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
 
                     }
                 }
@@ -130,10 +172,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookItemHolder> {
 //        });
 
 
-
-
-
     }
+
     // Helper method to check app installation
     private boolean isAppInstalled(Context context, String packageName) {
         PackageManager pm = context.getPackageManager();
@@ -155,7 +195,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookItemHolder> {
             holder.options_container.setVisibility(View.GONE);
             holder.denied_container.setVisibility(View.GONE);
             holder.approved_container.setVisibility(View.VISIBLE);
-        } else if(bookStat==BookingStatus.DENIED){
+        } else if (bookStat == BookingStatus.DENIED) {
             holder.options_container.setVisibility(View.GONE);
             holder.denied_container.setVisibility(View.VISIBLE);
             holder.approved_container.setVisibility(View.GONE);

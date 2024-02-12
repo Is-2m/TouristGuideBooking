@@ -22,6 +22,7 @@ import com.mbdio.touristguidebooking.dao.BookingDAO;
 import com.mbdio.touristguidebooking.dao.UserCallbacks;
 import com.mbdio.touristguidebooking.dao.UserDAO;
 import com.mbdio.touristguidebooking.models.Booking;
+import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
 import com.mbdio.touristguidebooking.models.UserType;
 import com.mbdio.touristguidebooking.utils.AppStateManager;
@@ -55,12 +56,9 @@ public class LandingActivity extends AppCompatActivity {
                     User currentUser = AppStateManager.getCurrentUser();
                     if (currentUser != null) {
                         if (currentUser.getUserType() == UserType.GUIDE) {
-                            BookingDAO.getAllBookings(currentUser.getUserID(), new BookingCallbacks() {
-                                @Override
-                                public void onGetAllBookings(ArrayList<Booking> lst) {
-                                    AppStateManager.setBookingHistory(lst);
-                                }
-                            });
+                            getGuideBookings(currentUser.getUserID());
+                        } else {
+                            getTouristBookings((Tourist) currentUser);
                         }
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
@@ -75,12 +73,9 @@ public class LandingActivity extends AppCompatActivity {
                                 if (user != null) {
                                     AppStateManager.setCurrentUser(user);
                                     if (user.getUserType() == UserType.GUIDE) {
-                                        BookingDAO.getAllBookings(user.getUserID(), new BookingCallbacks() {
-                                            @Override
-                                            public void onGetAllBookings(ArrayList<Booking> lst) {
-                                                AppStateManager.setBookingHistory(lst);
-                                            }
-                                        });
+                                        getGuideBookings(user.getUserID());
+                                    } else {
+                                        getTouristBookings((Tourist) user);
                                     }
                                     Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
@@ -143,5 +138,26 @@ public class LandingActivity extends AppCompatActivity {
         return location;
     }
 
+    void getTouristBookings(Tourist t) {
+        ArrayList<Booking> lstBooking = new ArrayList<>();
+        if (t.getListBookings() != null && !t.getListBookings().isEmpty())
+            for (String s : t.getListBookings()) {
+                BookingDAO.getBooking(s, new BookingCallbacks() {
+                    @Override
+                    public void onGetBooking(Booking book) {
+                        lstBooking.add(book);
+                    }
+                });
+            }
+        AppStateManager.setBookingHistory(lstBooking);
+    }
 
+    void getGuideBookings(String uid) {
+        BookingDAO.getAllBookings(uid, new BookingCallbacks() {
+            @Override
+            public void onGetAllBookings(ArrayList<Booking> lst) {
+                AppStateManager.setBookingHistory(lst);
+            }
+        });
+    }
 }
