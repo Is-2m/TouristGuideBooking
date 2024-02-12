@@ -13,7 +13,9 @@ import com.mbdio.touristguidebooking.R;
 public class BookItemHolder extends RecyclerView.ViewHolder {
     public ShapeableImageView pdp_img;
     public TextView name_lbl, date_lbl, nation_lbl, phone_lbl, state_lbl;
-    public LinearLayout accept_btn, deny_btn, book_item, phone_btn, options_container, approved_container, denied_container;
+    public LinearLayout accept_btn, deny_btn, book_item, phone_btn, options_container,
+            approved_container, denied_container, hist_stat_container, book_hist_denied,
+            book_hist_approved, book_hist_pending;
 
     public BookItemHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,6 +32,10 @@ public class BookItemHolder extends RecyclerView.ViewHolder {
         options_container = itemView.findViewById(R.id.options_container);
         approved_container = itemView.findViewById(R.id.approved_container);
         denied_container = itemView.findViewById(R.id.denied_container);
+        hist_stat_container = itemView.findViewById(R.id.hist_stat_container);
+        book_hist_denied = itemView.findViewById(R.id.book_hist_denied);
+        book_hist_approved = itemView.findViewById(R.id.book_hist_approved);
+        book_hist_pending = itemView.findViewById(R.id.book_hist_pending);
     }
 }
 

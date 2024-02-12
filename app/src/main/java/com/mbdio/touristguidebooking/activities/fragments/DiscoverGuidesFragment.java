@@ -1,5 +1,6 @@
 package com.mbdio.touristguidebooking.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mbdio.touristguidebooking.R;
+import com.mbdio.touristguidebooking.activities.BookingHistoryActivity;
 import com.mbdio.touristguidebooking.adapters.DiscoverGuideAdapter;
 import com.mbdio.touristguidebooking.dao.GuideCallbacks;
 import com.mbdio.touristguidebooking.dao.GuideDAO;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 
 public class DiscoverGuidesFragment extends Fragment {
     RecyclerView recyclerView;
-    ImageView filter_btn;
+    ImageView history_btn;
 
     public DiscoverGuidesFragment() {
         // Required empty public constructor
@@ -48,7 +50,7 @@ public class DiscoverGuidesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_discover_guides, container, false);
         recyclerView = v.findViewById(R.id.recycle_guide);
-        filter_btn = v.findViewById(R.id.guide_filter_btn);
+        history_btn = v.findViewById(R.id.guide_history_btn);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         GuideDAO.getAllGuides(new GuideCallbacks() {
@@ -58,7 +60,10 @@ public class DiscoverGuidesFragment extends Fragment {
             }
         });
 
-
+        history_btn.setOnClickListener(v1 -> {
+            Intent intent = new Intent(getContext(), BookingHistoryActivity.class);
+            getActivity().startActivity(intent);
+        });
 
         return v;
     }

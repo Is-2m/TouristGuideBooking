@@ -98,10 +98,18 @@ public class BookingDAO {
     public static void getBooking(String path, BookingCallbacks callbacks) {
         String[] parts = path.split("/");
         String docId = parts[3];
+        String guideId = parts[1];
         String collection = String.join("/", Arrays.copyOf(parts, 3));
         db.collection(collection).document(docId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Booking book = task.getResult().toObject(Booking.class);
+                UserDAO.getUser(guideId, new UserCallbacks() {
+                    @Override
+                    public void onGetUser(User user) {
+                        book.setGuide((Guide) user);
+
+                    }
+                });
                 callbacks.onGetBooking(book);
             } else {
                 callbacks.onGetBooking(null);

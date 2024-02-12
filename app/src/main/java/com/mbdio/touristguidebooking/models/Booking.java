@@ -13,16 +13,27 @@ public class Booking {
     private String touristId;
     @Exclude
     private Tourist tourist;
+    @Exclude
+    private Guide guide;
 
     public Booking() {
     }
 
-    public Booking(String id, String date, BookingStatus status, String touristID, Tourist tourist) {
+    public Booking(String id, String date, BookingStatus status, String touristId, Tourist tourist, Guide guide) {
         this.id = id;
         this.date = date;
         this.status = status;
         this.touristId = touristId;
-        this.setTourist( tourist);
+        this.setTourist(tourist);
+        this.setGuide(guide);
+    }
+
+    public Guide getGuide() {
+        return guide;
+    }
+
+    public void setGuide(Guide guide) {
+        this.guide = guide;
     }
 
     public Booking(String date, BookingStatus status, String touristId) {

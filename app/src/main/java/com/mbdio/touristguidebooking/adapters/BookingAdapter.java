@@ -52,6 +52,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookItemHolder> {
         holder.name_lbl.setText(name);
         holder.nation_lbl.setText(curntBooking.getTourist().getNationality());
         holder.phone_lbl.setText(curntBooking.getTourist().getPhone());
+
         refreshState(holder, curntBooking.getStatus());
 
         Glide.with(ctx).load(curntBooking.getTourist()
@@ -139,38 +140,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookItemHolder> {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ctx.startActivity(intent);
         });
-//        holder.phone_btn.setOnClickListener(v -> {
-//            String phoneNumber = curntBooking.getTourist().getPhone().replace(" ", "");
-//
-//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNumber));
-//
-//            // WhatsApp Intent (if installed)
-//            Intent whatsappIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/" + phoneNumber));
-//            if (isAppInstalled(ctx, "com.whatsapp")) {
-//                intent.setPackage("com.whatsapp");
-//            }
-//            intent.putExtra(Intent.EXTRA_SPLIT_INTENT, whatsappIntent);
-//
-//            // Telegram Intent (if installed)
-//            Intent telegramIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/" + phoneNumber));
-//            if (isAppInstalled(ctx, "org.telegram.messenger")) {
-//                intent.setPackage("org.telegram.messenger");
-//            }
-//            intent.putExtra(Intent.EXTRA_SPLIT_INTENT, telegramIntent);
-//
-//            // Create chooser
-//            Intent chooserIntent = Intent.createChooser(intent, "Choose an app to contact:");
-//
-//            // Start chooser
-//            if (intent.resolveActivity(ctx.getPackageManager()) != null) {
-//                ctx.startActivity(chooserIntent);
-//            } else {
-//                // Handle no suitable app found
-//                // You can display a toast message or provide alternative options
-//                Toast.makeText(ctx, "No suitable app found to contact", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
 
     }
 
@@ -187,6 +156,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookItemHolder> {
 
     void refreshState(BookItemHolder holder, BookingStatus bookStat) {
         holder.state_lbl.setText(bookStat.name());
+        holder.hist_stat_container.setVisibility(View.GONE);
         if (bookStat == BookingStatus.PENDING) {
             holder.options_container.setVisibility(View.VISIBLE);
             holder.denied_container.setVisibility(View.GONE);

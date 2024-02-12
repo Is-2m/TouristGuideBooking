@@ -24,11 +24,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.mbdio.touristguidebooking.R;
 import com.mbdio.touristguidebooking.dao.AuthCallbacks;
 import com.mbdio.touristguidebooking.dao.AuthDAO;
+import com.mbdio.touristguidebooking.dao.BookingCallbacks;
+import com.mbdio.touristguidebooking.dao.BookingDAO;
 import com.mbdio.touristguidebooking.dao.UserCallbacks;
 import com.mbdio.touristguidebooking.dao.UserDAO;
+import com.mbdio.touristguidebooking.models.Booking;
+import com.mbdio.touristguidebooking.models.Tourist;
 import com.mbdio.touristguidebooking.models.User;
 import com.mbdio.touristguidebooking.models.UserType;
 import com.mbdio.touristguidebooking.utils.AppStateManager;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btn_login;
@@ -82,6 +88,13 @@ public class LoginActivity extends AppCompatActivity {
                     AppStateManager.setCurrentFireUser(fireUser);
                     User currentUser = AppStateManager.getCurrentUser();
                     if (currentUser != null) {
+                        if (AppStateManager.getBookingHistory().isEmpty() || AppStateManager.getBookingHistory() == null) {
+                            if (currentUser.getUserType() == UserType.TOURIST) {
+                                getTouristBookings((Tourist) currentUser);
+                            } else {
+                                getGuideBookings(currentUser.getUserID());
+                            }
+                        }
                         redirectToMainActivity(currentUser);
                     } else {
                         UserDAO.getUser(fireUser.getUid(), new UserCallbacks() {
@@ -89,6 +102,13 @@ public class LoginActivity extends AppCompatActivity {
                             public void onGetUser(User user) {
                                 if (user != null) {
                                     AppStateManager.setCurrentUser(user);
+                                    if (AppStateManager.getBookingHistory().isEmpty() || AppStateManager.getBookingHistory() == null) {
+                                        if (user.getUserType() == UserType.TOURIST) {
+                                            getTouristBookings((Tourist) user);
+                                        } else {
+                                            getGuideBookings(user.getUserID());
+                                        }
+                                    }
                                     redirectToMainActivity(user);
                                 }
                             }
@@ -117,6 +137,26 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    void getTouristBookings(Tourist t) {
+        ArrayList<Booking> lstBooking = new ArrayList<>();
+        if (t.getListBookings() != null && !t.getListBookings().isEmpty())
+            for (String s : t.getListBookings()) {
+                BookingDAO.getBooking(s, new BookingCallbacks() {
+                    @Override
+                    public void onGetBooking(Booking book) {
+                        lstBooking.add(book);
+                    }
+                });
+            }
+        AppStateManager.setBookingHistory(lstBooking);
+    }
 
-
+    void getGuideBookings(String uid) {
+        BookingDAO.getAllBookings(uid, new BookingCallbacks() {
+            @Override
+            public void onGetAllBookings(ArrayList<Booking> lst) {
+                AppStateManager.setBookingHistory(lst);
+            }
+        });
+    }
 }
