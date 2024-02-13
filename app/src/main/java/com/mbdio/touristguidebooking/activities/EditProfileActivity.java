@@ -30,7 +30,7 @@ import com.mbdio.touristguidebooking.utils.AppStateManager;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    TextInputEditText txt_Fname, txt_Lname, txt_bio, txt_country, txt_languages;
+    TextInputEditText txt_Fname, txt_Lname, txt_bio, txt_country, txt_languages,txt_city;
     TextView btn_resetPass, btn_verifyEmail, lbl_phone, lbl_email, lbl_email1, lbl_country;
     LinearLayout guide_container, nationality_container;
     Button btn_save;
@@ -59,6 +59,7 @@ public class EditProfileActivity extends AppCompatActivity {
         txt_languages = findViewById(R.id.edit_profile_languages);
         guide_container = findViewById(R.id.guide_container);
         nationality_container = findViewById(R.id.nationality_container);
+        txt_city=findViewById(R.id.edit_profile_city);
         ccp = findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(txt_phone);
 
@@ -122,14 +123,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
             String phone = "+" + ccp.getSelectedCountryCode() + txt_phone.getEditableText().toString();
-            phone = phone.replace(" ", "");
-            phone = phone.replace("-", "");
+            if(txt_phone.getEditableText().toString().isEmpty()){
+                phone="";
+            }else{
+                phone = phone.replace(" ", "");
+                phone = phone.replace("-", "");
+            }
+
 
             String country = txt_country.getEditableText().toString();
             String fname = txt_Fname.getEditableText().toString();
             String lname = txt_Lname.getEditableText().toString();
             String bio = txt_bio.getEditableText().toString();
             String langs = txt_languages.getEditableText().toString();
+            String city = txt_city.getEditableText().toString();
+
 
             if (user.getUserType() == UserType.TOURIST) {
                 Tourist t = new Tourist(((Tourist) user));
@@ -159,6 +167,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 t.setFirstName(fname);
                 t.setLastName(lname);
                 t.setLanguages(langs);
+                t.setLocation(city);
+                System.out.println("EditProfileActivity.onCreate");
+                System.out.println(t);
                 GuideDAO.update(t, new GuideCallbacks() {
                     @Override
                     public void onGuideUpdated(boolean success, String message) {

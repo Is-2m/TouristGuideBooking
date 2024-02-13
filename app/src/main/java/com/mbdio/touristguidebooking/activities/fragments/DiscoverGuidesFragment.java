@@ -31,12 +31,6 @@ public class DiscoverGuidesFragment extends Fragment {
     }
 
 
-    public static DiscoverGuidesFragment newInstance(String param1, String param2) {
-        DiscoverGuidesFragment fragment = new DiscoverGuidesFragment();
-
-        return fragment;
-    }
-
     ArrayList<Guide> guideList = new ArrayList<>();
 
     @Override
@@ -70,7 +64,10 @@ public class DiscoverGuidesFragment extends Fragment {
 
 
     void showData(ArrayList<Guide> lst) {
-        DiscoverGuideAdapter adapter = new DiscoverGuideAdapter(getContext(), lst);
-        recyclerView.setAdapter(adapter);
+
+        if (lst != null && !lst.isEmpty()) {
+            DiscoverGuideAdapter adapter = new DiscoverGuideAdapter(getContext(), lst);
+            recyclerView.setAdapter(adapter);
+        }
     }
 }

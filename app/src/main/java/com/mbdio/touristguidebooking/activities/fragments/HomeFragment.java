@@ -40,12 +40,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,8 +135,12 @@ public class HomeFragment extends Fragment {
     }
 
     void show(ArrayList<Monument> lst) {
-        adapter = new myadapter(lst);
-        rview.setAdapter(adapter);
+        if (lst != null && !lst.isEmpty()) {
+
+            adapter = new myadapter(lst);
+            rview.setAdapter(adapter);
+
+        }
     }
 
    /* public void openEmergencyNumbersActivity(View view) {

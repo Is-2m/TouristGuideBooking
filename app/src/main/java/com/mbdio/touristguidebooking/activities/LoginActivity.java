@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onGetUser(User user) {
                                 if (user != null) {
                                     AppStateManager.setCurrentUser(user);
-                                    if (AppStateManager.getBookingHistory().isEmpty() || AppStateManager.getBookingHistory() == null) {
+                                    if (AppStateManager.getBookingHistory() == null || AppStateManager.getBookingHistory().isEmpty()) {
                                         if (user.getUserType() == UserType.TOURIST) {
                                             getTouristBookings((Tourist) user);
                                         } else {

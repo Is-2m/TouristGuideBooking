@@ -102,8 +102,14 @@ public class BookingsFragment extends Fragment {
     }
 
     void showData(ArrayList<Booking> lst) {
-        BookingAdapter adapter = new BookingAdapter(getContext(), lst);
-        recyclerView.setAdapter(adapter);
+        if (lst != null && !lst.isEmpty()) {
+            BookingAdapter adapter = new BookingAdapter(getContext(), lst);
+            recyclerView.setAdapter(adapter);
+        } else {
+            lst = new ArrayList<>();
+            BookingAdapter adapter = new BookingAdapter(getContext(), lst);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     ArrayList<Booking> filterBy(BookingStatus bookStat) {

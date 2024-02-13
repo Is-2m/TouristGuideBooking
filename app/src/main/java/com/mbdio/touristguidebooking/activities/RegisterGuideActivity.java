@@ -2,6 +2,7 @@ package com.mbdio.touristguidebooking.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,13 @@ import com.mbdio.touristguidebooking.dao.AuthCallbacks;
 import com.mbdio.touristguidebooking.dao.AuthDAO;
 import com.mbdio.touristguidebooking.dao.GuideCallbacks;
 import com.mbdio.touristguidebooking.dao.GuideDAO;
+import com.mbdio.touristguidebooking.dao.UserCallbacks;
+import com.mbdio.touristguidebooking.dao.UserDAO;
 import com.mbdio.touristguidebooking.models.Guide;
+import com.mbdio.touristguidebooking.models.Tourist;
+import com.mbdio.touristguidebooking.models.User;
+import com.mbdio.touristguidebooking.models.UserType;
+import com.mbdio.touristguidebooking.utils.AppStateManager;
 
 public class RegisterGuideActivity extends AppCompatActivity {
 
@@ -62,7 +69,8 @@ public class RegisterGuideActivity extends AppCompatActivity {
 
                             public void onGuideInserted(boolean success, String message) {
                                 if (success) {
-                                    Intent intent = new Intent(RegisterGuideActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(RegisterGuideActivity.this, LandingActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 }
                             }
@@ -76,4 +84,55 @@ public class RegisterGuideActivity extends AppCompatActivity {
 
         });
     }
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+////        getCurrentLocation();
+//
+//        AuthDAO.checkIsLogged(new AuthCallbacks() {
+//            @Override
+//            public void onCheckLoggedComplete(FirebaseUser fireUser) {
+//                if (fireUser != null) {
+//                    AppStateManager.setCurrentFireUser(fireUser);
+//                    User currentUser = AppStateManager.getCurrentUser();
+//                    if (currentUser != null) {
+//                        if (currentUser.getUserType() == UserType.GUIDE) {
+//                            LandingActivity.getGuideBookings(currentUser.getUserID());
+//                        } else {
+//                            LandingActivity.getTouristBookings((Tourist) currentUser);
+//                        }
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            public void run() {
+//
+//                                LandingActivity.redirectToMainActivity(RegisterGuideActivity.this, currentUser);
+//                            }
+//                        }, LandingActivity.DELAY);
+//                    } else {
+//                        UserDAO.getUser(fireUser.getUid(), new UserCallbacks() {
+//                            @Override
+//                            public void onGetUser(User user) {
+//                                if (user != null) {
+//                                    AppStateManager.setCurrentUser(user);
+//                                    if (user.getUserType() == UserType.GUIDE) {
+//                                        LandingActivity.getGuideBookings(user.getUserID());
+//                                    } else {
+//                                        LandingActivity.getTouristBookings((Tourist) user);
+//                                    }
+//                                    Handler handler = new Handler();
+//                                    handler.postDelayed(new Runnable() {
+//                                        public void run() {
+//                                            LandingActivity.redirectToMainActivity(RegisterGuideActivity.this, user);
+//                                        }
+//                                    }, LandingActivity.DELAY);
+//                                }
+//                            }
+//                        });
+//                    }
+//                }
+//            }
+//        });
+//    }
 }

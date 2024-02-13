@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class LandingActivity extends AppCompatActivity {
 
-    private final int DELAY = 2500;
+    public static final int DELAY = 2500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class LandingActivity extends AppCompatActivity {
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {
-                                redirectToMainActivity(currentUser);
+                                redirectToMainActivity(LandingActivity.this, currentUser);
                             }
                         }, DELAY);
                     } else {
@@ -80,7 +80,7 @@ public class LandingActivity extends AppCompatActivity {
                                     Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
                                         public void run() {
-                                            redirectToMainActivity(user);
+                                            redirectToMainActivity(LandingActivity.this, user);
                                         }
                                     }, DELAY);
                                 }
@@ -101,11 +101,11 @@ public class LandingActivity extends AppCompatActivity {
         });
     }
 
-    void redirectToMainActivity(User user) {
+    public static void redirectToMainActivity(Context ctx, User user) {
 
-        Intent intent = new Intent(LandingActivity.this, MainActivity.class);
+        Intent intent = new Intent(ctx, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        ctx.startActivity(intent);
 
     }
 
@@ -138,7 +138,7 @@ public class LandingActivity extends AppCompatActivity {
         return location;
     }
 
-    void getTouristBookings(Tourist t) {
+    public static void getTouristBookings(Tourist t) {
         ArrayList<Booking> lstBooking = new ArrayList<>();
         if (t.getListBookings() != null && !t.getListBookings().isEmpty())
             for (String s : t.getListBookings()) {
@@ -152,7 +152,7 @@ public class LandingActivity extends AppCompatActivity {
         AppStateManager.setBookingHistory(lstBooking);
     }
 
-    void getGuideBookings(String uid) {
+    public static void getGuideBookings(String uid) {
         BookingDAO.getAllBookings(uid, new BookingCallbacks() {
             @Override
             public void onGetAllBookings(ArrayList<Booking> lst) {

@@ -73,6 +73,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:text="Arabic, French, English..."
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:textFontWeight="500" />
                 </LinearLayout>
 

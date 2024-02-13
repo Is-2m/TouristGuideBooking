@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // Set up BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         MenuItem menuItem = bottomNavigationView.getMenu().findItem(R.id.nav_discover);
-        if (AppStateManager.getCurrentUser().getUserType() == UserType.GUIDE) {
+        if (AppStateManager.getCurrentUser() != null && AppStateManager.getCurrentUser().getUserType() == UserType.GUIDE) {
             menuItem.setTitle("Bookings");
         }
         bottomNavigationView.setOnItemSelectedListener(item -> {

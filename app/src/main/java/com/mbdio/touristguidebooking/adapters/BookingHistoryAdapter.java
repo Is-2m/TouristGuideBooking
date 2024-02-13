@@ -65,7 +65,7 @@ public class BookingHistoryAdapter extends RecyclerView.Adapter<BookItemHolder> 
         Glide.with(ctx).load(curntBooking.getGuide()
                 .getProfilePicture()).error(R.drawable.traveler_colored).into(holder.pdp_img);
 
-        holder.book_item.setOnClickListener(v -> {
+        holder.book_item    .setOnClickListener(v -> {
             AppStateManager.setClickedGuide(curntBooking.getGuide());
             Intent intent = new Intent(ctx, ViewProfileActivity.class);
             ctx.startActivity(intent);

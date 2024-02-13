@@ -150,49 +150,57 @@ public class ProfileFragment extends Fragment {
 
     private void refreshProfile(Context ctx) {
         User user = AppStateManager.getCurrentUser();
+        try {
+            if (user.getUserType() == UserType.TOURIST) {
+                Tourist tourist = (Tourist) user;
+                String name = tourist.getFirstName() + " " + tourist.getLastName().toUpperCase();
+                profile_name_lbl.setText(name);
+                profile_phone_lbl.setText(tourist.getPhone());
+                profile_bio_lbl.setText(tourist.getBio());
+                profile_email_lbl.setText(tourist.getEmail());
+                profile_country_lbl.setText(tourist.getNationality());
 
-        if (user.getUserType() == UserType.TOURIST) {
-            Tourist tourist = (Tourist) user;
-            String name = tourist.getFirstName() + " " + tourist.getLastName().toUpperCase();
-            profile_name_lbl.setText(name);
-            profile_phone_lbl.setText(tourist.getPhone());
-            profile_bio_lbl.setText(tourist.getBio());
-            profile_email_lbl.setText(tourist.getEmail());
-            profile_country_lbl.setText(tourist.getNationality());
+                guide_thingies.setVisibility(View.INVISIBLE);
+                guide_thingies.getLayoutParams().height = 0;
 
-            guide_thingies.setVisibility(View.INVISIBLE);
-            guide_thingies.getLayoutParams().height = 0;
+                if (!tourist.getProfilePicture().isEmpty()) {
+                    Glide.with(ctx) // Replace 'context' with your Context
+                            .load(tourist.getProfilePicture())
+                            .into(profile_img);
+                }
+            } else {
+                Guide guide = (Guide) user;
+                String name = guide.getFirstName() + " " + guide.getLastName().toUpperCase();
+                String langs = "";
+                if (guide.getLanguages() != null) {
+                    langs = String.join(", ", guide.getLanguages().split(";"));
 
-            if (!tourist.getProfilePicture().isEmpty()) {
-                Glide.with(ctx) // Replace 'context' with your Context
-                        .load(tourist.getProfilePicture())
-                        .into(profile_img);
+                }
+
+
+                profile_country_lbl.setText("Morocco");
+
+                guide_thingies.setVisibility(View.VISIBLE);
+                guide_thingies.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+                profile_name_lbl.setText(name);
+                profile_phone_lbl.setText(guide.getPhone());
+                profile_bio_lbl.setText(guide.getBio());
+                profile_email_lbl.setText(guide.getEmail());
+                profile_languages_lbl.setText(langs);
+                profile_city_lbl.setText(guide.getLocation());
+
+                if (!guide.getProfilePicture().isEmpty()) {
+                    Glide.with(ctx) // Replace 'context' with your Context
+                            .load(guide.getProfilePicture())
+                            .into(profile_img);
+                }
+                //   profile_country_lbl.setText(guide.getNationality());
             }
-        } else {
-            Guide guide = (Guide) user;
-            String name = guide.getFirstName() + " " + guide.getLastName().toUpperCase();
-            String langs = String.join(", ", guide.getLanguages().split(";"));
-
-
-            profile_country_lbl.setText("Morocco");
-
-            guide_thingies.setVisibility(View.VISIBLE);
-            guide_thingies.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
-
-            profile_name_lbl.setText(name);
-            profile_phone_lbl.setText(guide.getPhone());
-            profile_bio_lbl.setText(guide.getBio());
-            profile_email_lbl.setText(guide.getEmail());
-            profile_languages_lbl.setText(langs);
-            profile_city_lbl.setText(guide.getLocation());
-
-            if (!guide.getProfilePicture().isEmpty()) {
-                Glide.with(ctx) // Replace 'context' with your Context
-                        .load(guide.getProfilePicture())
-                        .into(profile_img);
-            }
-            //   profile_country_lbl.setText(guide.getNationality());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
     }
 }
