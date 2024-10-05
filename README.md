@@ -68,7 +68,7 @@ Here are some images to illustrate the project:
 ### Installation
 1. Clone the repository:
     ```bash
-      git clone https://github.com/your-repo/trustworthy-morocco.git
+      git clone https://github.com/Is-2m/TouristGuideBooking.git
     ```
 2. Open the project in Android Studio.
 3. Sync Gradle and build the project.
