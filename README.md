@@ -15,18 +15,40 @@
 ## Screenshots
 Here are some images to illustrate the project:
 
-* Login Screen:<br/>
-  <img src="./readme_res/login.jpg" alt="Login Screen" width="75%"/><br/>
-* Register Screen:<br/>
-  <img src="./readme_res/register.jpg" alt="Register Screen" width="75%"/><br/>
-* Home/Monuments Screen:<br/>
-  <img src="./readme_res/home-monuments.jpg" alt="Home/Monuments Screen" width="75%"/><br/>
-* SOS Screen:<br/>
-  <img src="./readme_res/sos.jpg" alt="SOS Screen" width="75%"/><br/>
-* Profile Screen:<br/>
-  <img src="./readme_res/profile.jpg" alt="Profile Screen" width="75%"/><br/>
-* Guides Screen:<br/>
-  <img src="./readme_res/guides.jpg" alt="Guides Screen" width="75%"/><br/>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+
+  <div style="margin: 10px;">
+    <img src="./readme_res/login.jpg" alt="Login Screen" width="25%"/>
+    <p align="center">Login Screen</p>
+  </div>
+
+  <div style="margin: 10px;">
+    <img src="./readme_res/register.jpg" alt="Register Screen" width="25%"/>
+    <p align="center">Register Screen</p>
+  </div>
+
+  <div style="margin: 10px;">
+    <img src="./readme_res/home-monuments.jpg" alt="Home/Monuments Screen" width="25%"/>
+    <p align="center">Home/Monuments Screen</p>
+  </div>
+
+  <div style="margin: 10px;">
+    <img src="./readme_res/sos.jpg" alt="SOS Screen" width="25%"/>
+    <p align="center">SOS Screen</p>
+  </div>
+
+  <div style="margin: 10px;">
+    <img src="./readme_res/profile.jpg" alt="Profile Screen" width="25%"/>
+    <p align="center">Profile Screen</p>
+  </div>
+
+  <div style="margin: 10px;">
+    <img src="./readme_res/guides.jpg" alt="Guides Screen" width="25%"/>
+    <p align="center">Guides Screen</p>
+  </div>
+
+</div>
+
 
 ### Development Stack
 - **Language:** Java (Android) with XML for UI components
